@@ -1,0 +1,64 @@
+.admin {
+  display: grid;
+  grid-template-areas: "side main";
+}
+
+.sidebar {
+  /* background-color: aqua;
+  padding: 0.5rem;
+  grid-area: side; */
+  height: 93vh;
+  /* width: 12vw; */
+}
+
+.main-content {
+  background-color: rgb(0, 217, 255);
+  grid-area: main;
+  padding-top: 45px;
+  width: 85vw;
+}
+
+.box-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin: 10px;
+}
+
+.boxcontainer {
+  display: flex;
+  border: 3px solid rgb(111, 0, 255);
+  border-radius: 20px;
+  padding: 5px;
+  width: 15vw;
+}
+
+.boxcontainer > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+}
+
+.boxcontainer-text {
+  justify-content: center;
+}
+
+.chart-news-container {
+  margin: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.chart-news-container > div {
+  margin-top: 20vh;
+  height: 50vh;
+  width: 30vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 3px solid rgb(212, 0, 255);
+  padding: 5px;
+  border-radius: 10px;
+}

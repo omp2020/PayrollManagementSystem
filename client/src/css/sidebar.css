@@ -1,0 +1,10 @@
+.logo {
+  display: flex;
+  justify-content: center;
+}
+
+.sidebar-links {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10vh;
+}
