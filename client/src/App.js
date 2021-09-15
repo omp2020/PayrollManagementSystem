@@ -1,6 +1,6 @@
 import "./App.css"
 import Login from "./components/Login"
-import Admin from "./components/admin_component/Admin"
+import Admin from "./components/admin/Admin"
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 
 function App() {
