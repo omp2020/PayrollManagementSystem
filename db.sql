@@ -13,7 +13,7 @@ CREATE TABLE Employee(
  City VARCHAR(25),
  State VARCHAR(25),
  PRIMARY KEY (Employee_Id));
- use pms;account_details
+ use pms;
  CREATE TABLE Department(
  Department_Id Int(6),
  Department_Name VARCHAR(30),
