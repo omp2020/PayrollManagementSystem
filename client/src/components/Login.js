@@ -28,15 +28,13 @@ const Login = () => {
   const [isLogin, setLogin] = useState(false)
 
   const makeLogin = () => {
-    console.log("Username: ", loginData.username)
-    console.log("Password: ", loginData.password)
     axios
-      .get("/api", {
+      .get("/login", {
         params: { username: loginData.username, password: loginData.password },
       })
       .then((result) => {
-        console.log(result.data)
-        if (result.data.error === "0") {
+        console.log(result.data.error)
+        if (result.data.error == "0") {
           sessionStorage.setItem("isLogin", true)
           setLogin(true)
         } else {

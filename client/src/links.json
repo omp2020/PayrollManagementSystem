@@ -1,7 +1,7 @@
 {
-  "home": "#TODO",
+  "home": "http://localhost:3001/",
   "members": "members/",
   "accounts": "accounts/",
   "services": "services/",
-  "login": "/"
+  "login": "login"
 }
