@@ -1,6 +1,5 @@
 import React, { useState } from "react"
 import { Redirect } from "react-router-dom"
-import Sidebar from "./Sidebar"
 
 const Navbar = () => {
   const [isLogout, setLogout] = useState(false)
@@ -13,7 +12,7 @@ const Navbar = () => {
     <>
       <nav class="navbar navbar-dark sticky-top bg-primary flex-md-nowrap p-0">
         <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="/admin">
-          ERP Software
+          Payroll Management System
         </a>
         <div class="btn-group">
           <button
