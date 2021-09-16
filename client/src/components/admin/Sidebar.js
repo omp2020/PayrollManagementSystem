@@ -18,6 +18,11 @@ const Sidebar = () => {
               </Link>
             </li> */}
             <li className="nav nav-item">
+              <Link to="/admin/createUser">
+                <SidebarComponent text="Create User" />
+              </Link>
+            </li>
+            <li className="nav nav-item">
               <Link to="/admin/members">
                 <SidebarComponent text="Members" />
               </Link>

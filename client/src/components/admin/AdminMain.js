@@ -10,8 +10,8 @@ const AdminMain = () => {
       <div className="contnainer">
         <div className="h1 p-4">Admin</div>
         <div className="row">
-          <Boxcontainer text="No. of Members" value="150" type="member" />
-          <Boxcontainer text="Fund Balance" value="Rs. 9,00,000" type="money" />
+          <Boxcontainer text="No. of Employees" value="150" type="member" />
+          <Boxcontainer text="Leave Approval Pending" value="5" type="money" />
           <Boxcontainer
             text="No. of Committee Members"
             value="5"
@@ -19,20 +19,6 @@ const AdminMain = () => {
           />
         </div>
       </div>
-      {/* <div className="row">
-        <div className="col-md-6">
-          <div class="card">
-            <div class="card-header bg-primary">Accounts</div>
-            <div class="card-body">Pie Chart Container</div>
-          </div>
-        </div>
-        <div className="col-md-6">
-          <div class="card">
-            <div class="card-header bg-primary">News</div>
-            <div class="card-body">News Alert Container</div>
-          </div>
-        </div>
-      </div> */}
     </>
   )
 }

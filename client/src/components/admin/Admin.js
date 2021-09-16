@@ -7,6 +7,7 @@ import Members from "./Members"
 import Services from "./Services"
 import Accounts from "./Accounts"
 import Navbar from "./Navbar"
+import CreateUser from "./CreateUser"
 
 const Admin = () => {
   return (
@@ -21,6 +22,9 @@ const Admin = () => {
               <Switch>
                 <Route path="/admin" exact>
                   <AdminMain />
+                </Route>
+                <Route path="/admin/createUser">
+                  <CreateUser />
                 </Route>
                 <Route path="/admin/members">
                   <Members />
