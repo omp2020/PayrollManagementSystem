@@ -13,6 +13,7 @@ var con = mysql.createConnection({
   host: "localhost",
   user: "root",
   password: "admin@sa",
+  database: "pms",
 })
 
 con.connect(function (err) {
@@ -21,10 +22,22 @@ con.connect(function (err) {
 })
 
 app.get("/login", (req, res) => {
-  var data = { error: 0 }
-  res.send(data)
-  console.log(req.query.username)
-  console.log(req.query.password)
+  con.query(
+    "SELECT COUNT(*) as result FROM login_details WHERE username = ? AND passw = ?",
+    [req.query.username, req.query.password],
+    function (err, result, fields) {
+      var data
+      if (err) {
+        throw err
+        data = { error: 1 }
+        res.send(data)
+      } else {
+        console.log(result[0]["result"])
+        data = { error: 0 }
+        res.send(data)
+      }
+    }
+  )
 })
 
 app.get("*", (req, res) => {
