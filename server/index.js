@@ -1,5 +1,6 @@
 const express = require("express")
 const path = require("path")
+var CryptoJS = require("crypto-js")
 
 const PORT = process.env.PORT || 3001
 
