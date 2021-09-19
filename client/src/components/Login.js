@@ -3,6 +3,7 @@ import "../css/login.css"
 import Field from "./Field"
 import { Redirect } from "react-router-dom"
 import axios from "axios"
+var CryptoJS = require("crypto-js")
 
 const Login = () => {
   const [loginData, setLD] = useState({
@@ -28,9 +29,14 @@ const Login = () => {
   const [isLogin, setLogin] = useState(false)
 
   const makeLogin = () => {
+    var password = CryptoJS.AES.encrypt(
+      loginData.password,
+      "my-secret-key@123"
+    ).toString()
+    console.log("Encrypted Password: ", password)
     axios
       .get("/login", {
-        params: { username: loginData.username, password: loginData.password },
+        params: { username: loginData.username, password: password },
       })
       .then((result) => {
         console.log(result.data.error)
