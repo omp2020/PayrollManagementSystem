@@ -1,10 +1,15 @@
 import React, { useState } from "react"
 import links from "../../links.json"
+import Toast from "../Toast"
+import checkIcon from "../../img/check.svg"
 
 const CreateUser = () => {
   const iL = sessionStorage.getItem("isLogin") ?? false
   iL || (window.location.href = links.login)
-
+  const [list, setList] = useState([])
+  let toastProperties = null
+  const [showtoast, settoast] = useState(false)
+  const id = Math.floor(Math.random() * 101 + 1)
   const [userData, setUD] = useState({
     empID: "",
     mobile: "",
@@ -62,10 +67,29 @@ const CreateUser = () => {
 
   const createUser = () => {
     console.log("Create User called")
+    toastProperties = {
+      id,
+      title: "Success",
+      description: "This is a success toast component",
+      backgroundColor: "#5cb85c",
+      icon: checkIcon,
+    }
+    setList([...list, toastProperties])
+    settoast(true)
   }
   return (
     <>
       <div className="contnainer">
+        {showtoast ? (
+          <Toast
+            toastList={list}
+            position="top-right"
+            autoDelete={false}
+            autoDeleteTime=""
+          />
+        ) : (
+          ""
+        )}
         <div className="h1 p-4">Create User</div>
         <form class="p-4" id="create-user">
           <div class="form-group row">
