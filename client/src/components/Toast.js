@@ -23,8 +23,6 @@ const Toast = (props) => {
     return () => {
       clearInterval(interval)
     }
-
-    // eslint-disable-next-line
   }, [toastList, autoDelete, dismissTime, list])
 
   const deleteToast = (id) => {

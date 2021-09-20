@@ -8,6 +8,7 @@ import Services from "./Services"
 import Accounts from "./Accounts"
 import Navbar from "./Navbar"
 import CreateUser from "./CreateUser"
+import AddDept from "./AddDept"
 
 const Admin = () => {
   return (
@@ -25,6 +26,9 @@ const Admin = () => {
                 </Route>
                 <Route path="/admin/createUser">
                   <CreateUser />
+                </Route>
+                <Route path="/admin/addDept">
+                  <AddDept />
                 </Route>
                 <Route path="/admin/members">
                   <Members />
