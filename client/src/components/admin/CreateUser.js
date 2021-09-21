@@ -1,10 +1,17 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import links from "../../links.json"
+import Toast from "../Toast"
+import checkIcon from "../../img/check.svg"
+import axios from "axios"
 
 const CreateUser = () => {
   const iL = sessionStorage.getItem("isLogin") ?? false
   iL || (window.location.href = links.login)
-
+  const [deptlist, setdept] = useState([])
+  const [list, setList] = useState([])
+  let toastProperties = null
+  const [showtoast, settoast] = useState(false)
+  const id = Math.floor(Math.random() * 101 + 1)
   const [userData, setUD] = useState({
     empID: "",
     mobile: "",
@@ -15,7 +22,7 @@ const CreateUser = () => {
     city: "",
     state: "",
     hdate: "",
-    uname: "",
+    dept: "",
   })
 
   const changeVal = (e, field) => {
@@ -48,8 +55,8 @@ const CreateUser = () => {
       case "hdate":
         setUD({ ...userData, hdate: val })
         break
-      case "uname":
-        setUD({ ...userData, uname: val })
+      case "dept":
+        setUD({ ...userData, dept: val })
         break
       default:
         break
@@ -61,12 +68,41 @@ const CreateUser = () => {
   }
 
   const createUser = () => {
-    console.log("Create User called")
+    axios.get("/api/admin/createUser", {}).then((result) => {
+      if (result.data.error == "0") {
+        toastProperties = {
+          id,
+          title: "Success",
+          description: "This is a success toast component",
+          backgroundColor: "#5cb85c",
+          icon: checkIcon,
+        }
+        setList([...list, toastProperties])
+        settoast(true)
+      } else {
+      }
+    })
   }
+
+  useEffect(() => {
+    axios.get("/api/admin/listdept").then((result) => {
+      setdept(result.data)
+    })
+  }, [])
   return (
     <>
       <div className="contnainer">
-        <div className="h1 p-4">Create User</div>
+        {showtoast ? (
+          <Toast
+            toastList={list}
+            position="top-right"
+            autoDelete={false}
+            autoDeleteTime={3000}
+          />
+        ) : (
+          ""
+        )}
+        <div className="h1 p-4">Add Employee</div>
         <form class="p-4" id="create-user">
           <div class="form-group row">
             <Input
@@ -140,13 +176,27 @@ const CreateUser = () => {
               required="true"
               onChange={(e) => changeVal(e, "hdate")}
             />
-            <Input
-              id="uname"
-              itype="text"
-              legend="Username"
-              required="true"
-              onChange={(e) => changeVal(e, "uname")}
-            />
+            <label for="dept" class="col-sm-2 col-form-label">
+              Department
+            </label>
+            <div class="col-sm-4">
+              <select
+                id="dept"
+                class="form-control"
+                onChange={(e) => changeVal(e, "dept")}
+              >
+                <option selected required disabled>
+                  --Select--
+                </option>
+                {deptlist.map((e, key) => {
+                  return (
+                    <option key={key} value={e.Department_ID}>
+                      {e.Department_Name}
+                    </option>
+                  )
+                })}
+              </select>
+            </div>
           </div>
         </form>
         <div class="d-flex justify-content-center">

@@ -1,6 +1,6 @@
 const express = require("express")
 const path = require("path")
-var CryptoJS = require("crypto-js")
+const adminRoutes = require("./api_admin")
 
 const PORT = process.env.PORT || 3001
 
@@ -19,7 +19,7 @@ var con = mysql.createConnection({
 
 con.connect(function (err) {
   if (err) throw err
-  console.log("Connected!")
+  console.log("Databse Connected!")
 })
 
 app.get("/login", (req, res) => {
@@ -29,17 +29,17 @@ app.get("/login", (req, res) => {
     function (err, result, fields) {
       var data
       if (err) {
-        throw err
         data = { error: 1 }
         res.send(data)
       } else {
-        console.log(result[0]["result"])
         data = { error: 0 }
         res.send(data)
       }
     }
   )
 })
+
+app.use("/api/admin/", adminRoutes)
 
 app.get("*", (req, res) => {
   res.sendFile(path.resolve(__dirname, "../client/build", "index.html"))
