@@ -13,7 +13,7 @@ var mysql = require("mysql")
 var con = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "shamik100",
+  password: "admin@sa",
   database: "pms",
 })
 
@@ -24,7 +24,7 @@ con.connect(function (err) {
 
 app.get("/login", (req, res) => {
   con.query(
-    "SELECT COUNT(*) as result FROM login_details WHERE username = ? AND passw = ?",
+    "SELECT is_admin  as result FROM login_details WHERE username = ? AND passw = ?",
     [req.query.username, req.query.password],
     function (err, result, fields) {
       var data
@@ -34,6 +34,7 @@ app.get("/login", (req, res) => {
       } else {
         data = { error: 0 }
         res.send(data)
+        console.log(result)
       }
     }
   )
