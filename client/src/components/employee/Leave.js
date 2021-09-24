@@ -1,5 +1,5 @@
 import React,{useState} from 'react';
-import './components/css/sidebar.css';
+import Sidebar from './components/css/sidebar.css';
 const Leave = () =>{
   const [Leave,setLeave] = useState({
     leave:"",
