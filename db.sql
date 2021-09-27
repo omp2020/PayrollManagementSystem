@@ -4,7 +4,7 @@ CREATE TABLE Employee(
  Employee_Id Int(6),
  First_Name VARCHAR(25),
  Last_Name VARCHAR(25),
- Mobile_No Int(9),
+ Mobile_No varchar(10),
  DOB Date,
  Designation varchar(30),
  Department_ID Int(6),
@@ -13,6 +13,8 @@ CREATE TABLE Employee(
  City VARCHAR(25),
  State VARCHAR(25),
  PRIMARY KEY (Employee_Id));
+insert into Employee values(100,"Pavitra","Poojary","7499197779","2001-05-31","Manager",11,"Technical","2020-09-12","Pune","Maharashtra");
+
  use pms;
  CREATE TABLE Department(
  Department_Id Int(6),
@@ -28,14 +30,15 @@ CREATE TABLE Employee(
  FOREIGN KEY (Employee_Id)
  REFERENCES Employee(Employee_Id)
  );
+ use pms;
  CREATE TABLE Salary(
  Salary_Id Int(6),
- Gross_Salary Int(10),
- Hourly_Pay Int(10),
- Account_Id Int(6),
+ Employee_Id Int(6),
+ month varchar(10),
+ year int,
+ salary int,
  PRIMARY KEY (Salary_Id),
- FOREIGN KEY (Account_Id)
- REFERENCES Account_Details(Account_Id)
+ FOREIGN KEY (Employee_Id) REFERENCES employee(Employee_Id)
  );
  -- CREATE TABLE Employee_Attendance(
 --  Employee_Id Int(6),
@@ -72,3 +75,4 @@ CREATE TABLE Login_Details(
  FOREIGN KEY (Employee_Id)
  REFERENCES Employee(Employee_Id)
  );
+insert into Employee(

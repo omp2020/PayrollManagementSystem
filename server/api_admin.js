@@ -4,7 +4,7 @@ var mysql = require("mysql")
 var con = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "admin@sa",
+  password: "P@vitra3131",
   database: "pms",
 })
 
@@ -39,6 +39,34 @@ router.get("/listdept", function (req, res) {
         arr.push(result[i])
       }
       res.send(arr)
+    }
+  })
+})
+
+router.get("/listpleave", function (req, res) {
+  let arr = []
+  con.query("SELECT * FROM AccRejLeave", function (err, result) {
+    if (err) throw err
+    else {
+      for (var i = 0; i < result.length; i++) {
+        arr.push(result[i])
+      }
+      res.send(arr)
+      // console.log(result);
+    }
+  })
+})
+
+router.get("/listsalary", function (req, res) {
+  let arr = []
+  con.query("SELECT * FROM Salary_D", function (err, result) {
+    if (err) throw err
+    else {
+      for (var i = 0; i < result.length; i++) {
+        arr.push(result[i])
+      }
+      res.send(arr)
+      // console.log(result);
     }
   })
 })
