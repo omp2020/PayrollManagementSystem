@@ -13,6 +13,8 @@ import Accounts from "./Accounts"
 import Navbar from "./Navbar"
 import CreateUser from "./CreateUser"
 import AddDept from "./AddDept"
+import EmpDetails from "../employee/Employee_details"
+import Department from "./Department"
 // import Profile from "../employee/Profile"
 
 const Admin = () => {
@@ -55,6 +57,12 @@ const Admin = () => {
                 </Route>
                 <Route path="/admin/accounts">
                   <Accounts />
+                </Route>
+                <Route path="/emp/details">
+                  <EmpDetails />
+                </Route>
+                <Route path="/admin/department">
+                  <EmpDetails />
                 </Route>
                 {/* <Route path="/employee/Profile">
                   <Profile />
