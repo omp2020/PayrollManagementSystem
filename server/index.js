@@ -27,12 +27,14 @@ app.get("/login", (req, res) => {
   con.query(
     "SELECT passw, salt ,is_admin as result, COUNT(*) as count FROM login_details WHERE username = ? ",
     [req.query.username],
+
     function (err, result, fields) {
       var data
       if (err) {
         data = { error: 1 }
         res.send(data)
       } else {
+
         if (result[0].count > 0) {
           let hash = crypto
             .pbkdf2Sync(req.query.password, result[0].salt, 1000, 64, `sha512`)
@@ -51,6 +53,7 @@ app.get("/login", (req, res) => {
           data = { error: 1, errormsg: "User not found" }
           res.send(data)
         }
+
       }
     }
   )
