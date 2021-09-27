@@ -1,6 +1,7 @@
 const express = require("express")
 const path = require("path")
 const adminRoutes = require("./api_admin")
+var crypto = require("crypto")
 
 const PORT = process.env.PORT || 3001
 
@@ -24,16 +25,35 @@ con.connect(function (err) {
 
 app.get("/login", (req, res) => {
   con.query(
-    "SELECT COUNT(*) as result FROM login_details WHERE username = ? AND passw = ?",
-    [req.query.username, req.query.password],
+    "SELECT passw, salt ,is_admin as result, COUNT(*) as count FROM login_details WHERE username = ? ",
+    [req.query.username],
+
     function (err, result, fields) {
       var data
       if (err) {
         data = { error: 1 }
         res.send(data)
       } else {
-        data = { error: 0 }
-        res.send(data)
+
+        if (result[0].count > 0) {
+          let hash = crypto
+            .pbkdf2Sync(req.query.password, result[0].salt, 1000, 64, `sha512`)
+            .toString(`hex`)
+          if (hash == result[0].passw && result[0].result == 1) {
+            data = { error: 0, isadmin: 1 }
+            res.send(data)
+          } else if (hash == result[0].passw) {
+            data = { error: 0, isadmin: 0 }
+            res.send(data)
+          } else {
+            data = { error: 1, errormsg: "Username/Password Invalid" }
+            res.send(data)
+          }
+        } else {
+          data = { error: 1, errormsg: "User not found" }
+          res.send(data)
+        }
+
       }
     }
   )

@@ -1,8 +1,9 @@
-import React from "react"
+import React, { useState } from "react"
 import Sidebar from "./Sidebar"
 import "../../css/admin.css"
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 import AdminMain from "./AdminMain"
+import EmployeeMain from "../employee/EmployeeMain"
 import Members from "./Members"
 import AccRejLeave from "./AccRejLeave"
 import Salary from "./Salary"
@@ -14,18 +15,21 @@ import AddDept from "./AddDept"
 // import Profile from "../employee/Profile"
 
 const Admin = () => {
+  const [isAdmin] = useState(sessionStorage.getItem("isAdmin"))
   return (
     <>
-      <Navbar />
+      <Navbar employee={isAdmin == "true" ? "Admin" : "Employee"} />
       <div className="container-fluid" style={{ backgroundColor: "white" }}>
         <Router>
           <div className="row">
-            <Sidebar />
-            {/* <Navbar /> */}
+            <Sidebar isAdmin={isAdmin} />
             <main role="main" className="col-md-9 ml-sm-auto col-lg-10 px-4">
               <Switch>
                 <Route path="/admin" exact>
                   <AdminMain />
+                </Route>
+                <Route path="/employee" exact>
+                  <EmployeeMain />
                 </Route>
                 <Route path="/admin/createUser">
                   <CreateUser />
