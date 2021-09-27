@@ -38,6 +38,21 @@ app.get("/login", (req, res) => {
     }
   )
 })
+app.get("/api/emp/details", (req, res) => {
+  con.query(
+    "SELECT * FROM employee ",
+
+    function (err, result, fields) {
+      var data
+      if (err) {
+        data = { error: 1 }
+        res.send(data)
+      } else {
+        console.log (result)
+      }
+    }
+  )
+})
 
 app.use("/api/admin/", adminRoutes)
 

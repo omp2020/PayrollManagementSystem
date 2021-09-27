@@ -9,6 +9,8 @@ import Accounts from "./Accounts"
 import Navbar from "./Navbar"
 import CreateUser from "./CreateUser"
 import AddDept from "./AddDept"
+import EmpDetails from "../employee/Employee_details"
+import Department from "./Department"
 
 const Admin = () => {
   return (
@@ -38,6 +40,12 @@ const Admin = () => {
                 </Route>
                 <Route path="/admin/accounts">
                   <Accounts />
+                </Route>
+                <Route path="/emp/details">
+                  <EmpDetails />
+                </Route>
+                <Route path="/admin/department">
+                  <EmpDetails />
                 </Route>
               </Switch>
             </main>

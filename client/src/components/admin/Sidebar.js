@@ -12,14 +12,15 @@ const Sidebar = () => {
         <div className="sidebar-sticky">
           {/* <img src={Logo} alt="Logo" style={{ width: "50px" }} /> */}
           <ul className="nav flex-column">
-            {/* <li className="nav nav-item">
-              <Link to="/admin">
-                <SidebarComponent text="Admin Dashboard" />
-              </Link>
-            </li> */}
+            
             <li className="nav nav-item">
               <Link to="/admin/createUser">
                 <SidebarComponent text="Add Employee" />
+              </Link>
+            </li>
+            <li className="nav nav-item">
+              <Link to="/emp/details">
+                <SidebarComponent text="View Employee" />
               </Link>
             </li>
             <li className="nav nav-item">
@@ -44,6 +45,15 @@ const Sidebar = () => {
               <Link to="/admin/services">
                 <SidebarComponent text="Services" />
               </Link>
+              <li className="nav nav-item">
+              <Link to="/admin/Department">
+                <SidebarComponent text=" View Department" />
+              </Link>
+            </li><li className="nav nav-item">
+              <Link to="/employee/employee_details">
+                <SidebarComponent text="Employee Details" />
+              </Link>
+            </li>
             </li>
             {/* <li className="nav nav-item">
               <SidebarComponent text="Complaints" />
