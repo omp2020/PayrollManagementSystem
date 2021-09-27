@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { Redirect } from "react-router-dom"
 
-const Navbar = () => {
+const Navbar = ({ employee }) => {
   const [isLogout, setLogout] = useState(false)
 
   const handleLogout = () => {
@@ -11,7 +11,10 @@ const Navbar = () => {
   return (
     <>
       <nav class="navbar navbar-dark sticky-top bg-primary flex-md-nowrap p-0">
-        <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="/admin">
+        <a
+          class="navbar-brand col-sm-3 col-md-2 mr-0"
+          href={employee == "Admin" ? "/admin" : "/employee"}
+        >
           Payroll Management System
         </a>
         <div class="btn-group">
@@ -36,7 +39,7 @@ const Navbar = () => {
                 d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"
               />
             </svg>
-            &nbsp;&nbsp;&nbsp; Hello, Admin
+            &nbsp;&nbsp;&nbsp; Hello, {employee}
           </button>
           <div class="dropdown-menu dropdown-menu-right">
             <button
