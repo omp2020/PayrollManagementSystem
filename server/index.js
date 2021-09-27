@@ -15,6 +15,7 @@ var mysql = require("mysql")
 var con = mysql.createConnection({
   host: "localhost",
   user: "root",
+  password: "YourRootPassword",
   password: "P@vitra3131",
   database: "pms",
 })
@@ -55,6 +56,21 @@ app.get("/login", (req, res) => {
           res.send(data)
         }
 
+      }
+    }
+  )
+})
+app.get("/api/emp/details", (req, res) => {
+  con.query(
+    "SELECT * FROM employee ",
+
+    function (err, result, fields) {
+      var data
+      if (err) {
+        data = { error: 1 }
+        res.send(data)
+      } else {
+        console.log (result)
       }
     }
   )

@@ -1,5 +1,9 @@
 import React from "react"
 import links from "../../links.json"
+import CreateUser from "./CreateUser" //,(import file_name from "file_location")
+{/* <Route path="/admin/(path you want to browser in url)">
+  <file_name />
+</Route> */}
 
 const AdminMain = () => {
   const iL = sessionStorage.getItem("isLogin") ?? false
