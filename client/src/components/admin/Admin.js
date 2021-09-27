@@ -4,6 +4,7 @@ import "../../css/admin.css"
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 import AdminMain from "./AdminMain"
 import EmployeeMain from "../employee/EmployeeMain"
+import Leave from "../employee/Leave"
 import Members from "./Members"
 import Services from "./Services"
 import Accounts from "./Accounts"
@@ -27,6 +28,9 @@ const Admin = () => {
                 </Route>
                 <Route path="/employee" exact>
                   <EmployeeMain />
+                </Route>
+                <Route path="/employee/applyLeave" >
+                  <Leave />
                 </Route>
                 <Route path="/admin/createUser">
                   <CreateUser />
