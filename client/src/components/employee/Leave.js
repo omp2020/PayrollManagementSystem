@@ -4,12 +4,12 @@ const Leave = () =>{
   const iL = sessionStorage.getItem("isLogin") ?? false
   iL || (window.location.href = links.login)
   const [Leave,setLeave] = useState({
-    
+    emp_id:"",
     leave:"",
     day:"",
     fromDate:"",
     toDate:"",
-    reason:""
+    Reason:""
   })
   const handleLeave = event =>{
     const name = event.target.name;
@@ -26,23 +26,28 @@ const Leave = () =>{
     return (
         <>
             <form style={{marginLeft:"200px"}} onSubmit={handleSubmit}>
-              <h2 style={{marginTop:"50px"}}>Apply For Leave</h2>
+              <h2 style={{marginTop:"10px"}}>Apply For Leave</h2>
+              <br />
+              <label className="mr-sm-2">Enter Employee ID: </label>
+              <input type="number" name="emp_id" id="" onChange={handleLeave}/>
   <div className="form-row">
   <div className="col-auto my-1">
-    <br />
-      <label className="mr-sm-2" for="inlineFormCustomSelect">Leave Type</label>
+    
+      
+      <label className="mr-sm-2" for="inlineFormCustomSelect" style={{marginTop:"20px"}}>Leave Type</label>
       <select className="custom-select mr-sm-2" name="leave" id="inlineFormCustomSelect" onChange={handleLeave}>
         <option value = "Choose">Choose...</option>
         <option value="sick leave">Sick Leave</option>
         <option value="maternity leave">Maternity Leave</option>
-        <option value="optional">Personal</option>
-        <option value="sick leave">Vacation</option>
-        <option value="sick leave">Privilege</option>
+        <option value="optional leave">Personal</option>
+        <option value="vacation leave">Vacation</option>
+        <option value="privilege leave">Privilege</option>
       </select>
     </div>
+    
     <div className="col-auto my-1">
-      <br />
-      <label className="mr-sm-2" for="inlineFormCustomSelect">Day Type</label>
+      
+      <label className="mr-sm-2" for="inlineFormCustomSelect" style={{marginTop:"20px"}}>Day Type</label>
       <select className="custom-select mr-sm-2" name="day" id="inlineFormCustomSelect" onChange={handleLeave}>
         <option value="choose">Choose...</option>
         <option value="full">Full</option>
