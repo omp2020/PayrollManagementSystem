@@ -1,6 +1,7 @@
 const express = require("express")
 const path = require("path")
 const adminRoutes = require("./api_admin")
+const employeeRoutes = require("./api_employee")
 var crypto = require("crypto")
 
 const PORT = process.env.PORT || 3001
@@ -60,6 +61,7 @@ app.get("/login", (req, res) => {
 })
 
 app.use("/api/admin/", adminRoutes)
+app.use("/api/employee/", employeeRoutes)
 
 app.get("*", (req, res) => {
   res.sendFile(path.resolve(__dirname, "../client/build", "index.html"))

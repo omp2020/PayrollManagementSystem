@@ -1,7 +1,10 @@
 import React,{useState} from 'react';
-
+import links from "../../links.json"
 const Leave = () =>{
+  const iL = sessionStorage.getItem("isLogin") ?? false
+  iL || (window.location.href = links.login)
   const [Leave,setLeave] = useState({
+    
     leave:"",
     day:"",
     fromDate:"",
@@ -22,7 +25,7 @@ const Leave = () =>{
   }
     return (
         <>
-            <form style={{marginLeft:"450px"}} onSubmit={handleSubmit}>
+            <form style={{marginLeft:"200px"}} onSubmit={handleSubmit}>
               <h2 style={{marginTop:"50px"}}>Apply For Leave</h2>
   <div className="form-row">
   <div className="col-auto my-1">
