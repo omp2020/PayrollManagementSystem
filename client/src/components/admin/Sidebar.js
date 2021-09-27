@@ -33,6 +33,16 @@ const Sidebar = () => {
               </Link>
             </li>
             <li className="nav nav-item">
+              <Link to="/admin/AccRejLeave">
+                <SidebarComponent text="Check Leave Applications" />
+              </Link>
+            </li>
+            <li className="nav nav-item">
+              <Link to="/admin/Salary">
+                <SidebarComponent text="Salary Details" />
+              </Link>
+            </li>
+            <li className="nav nav-item">
               <Link to="/admin/accounts">
                 <SidebarComponent text="Accounts" />
               </Link>
@@ -45,6 +55,11 @@ const Sidebar = () => {
                 <SidebarComponent text="Services" />
               </Link>
             </li>
+            {/* <li className="nav nav-item">
+              <Link to="/employee/Profile">
+                <SidebarComponent text="Profile Page" />
+              </Link>
+            </li> */}
             {/* <li className="nav nav-item">
               <SidebarComponent text="Complaints" />
             </li> */}
