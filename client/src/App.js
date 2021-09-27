@@ -14,6 +14,9 @@ function App() {
           <Route path="/admin">
             <Admin />
           </Route>
+          <Route path="/employee">
+            <Admin />
+          </Route>
           {/* <Route path="/members">
             <Members />
           </Route> */}
