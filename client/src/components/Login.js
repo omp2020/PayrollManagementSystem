@@ -34,15 +34,16 @@ const Login = () => {
         params: { username: loginData.username, password: loginData.password },
       })
       .then((result) => {
-        console.log(result.data.error)
         if (result.data.error == "0" && result.data.isadmin == "1") {
           sessionStorage.setItem("isLogin", true)
           sessionStorage.setItem("isAdmin", true)
+          sessionStorage.setItem("ID", result.data.id)
           setAdmin(true)
           setLogin(true)
         } else if (result.data.error == "0") {
           sessionStorage.setItem("isLogin", true)
           sessionStorage.setItem("isAdmin", false)
+          sessionStorage.setItem("ID", result.data.id)
           setAdmin(false)
           setLogin(true)
         } else {

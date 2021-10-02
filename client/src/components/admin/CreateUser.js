@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react"
 import links from "../../links.json"
 import Toast from "../Toast"
 import checkIcon from "../../img/check.svg"
+import errorIcon from "../../img/error.svg"
 import axios from "axios"
 
 const CreateUser = () => {
@@ -67,21 +68,33 @@ const CreateUser = () => {
     document.getElementById("create-user").reset()
   }
 
-  const createUser = () => {
-    axios.get("/api/admin/createUser", {}).then((result) => {
-      if (result.data.error == "0") {
-        toastProperties = {
-          id,
-          title: "Success",
-          description: "This is a success toast component",
-          backgroundColor: "#5cb85c",
-          icon: checkIcon,
+  const createEmployee = () => {
+    axios
+      .get("/api/admin/createUser", { params: { data: userData } })
+      .then((result) => {
+        clearInputs()
+        if (result.data.error == "0") {
+          toastProperties = {
+            id,
+            title: "Success",
+            description: "Employee added to database successfully",
+            backgroundColor: "#5cb85c",
+            icon: checkIcon,
+          }
+          setList([...list, toastProperties])
+          settoast(true)
+        } else {
+          toastProperties = {
+            id,
+            title: "Danger",
+            description: "Department was not added",
+            backgroundColor: "#d9534f",
+            icon: errorIcon,
+          }
+          setList([...list, toastProperties])
+          settoast(true)
         }
-        setList([...list, toastProperties])
-        settoast(true)
-      } else {
-      }
-    })
+      })
   }
 
   useEffect(() => {
@@ -190,7 +203,7 @@ const CreateUser = () => {
                 </option>
                 {deptlist.map((e, key) => {
                   return (
-                    <option key={key} value={e.Department_ID}>
+                    <option key={key} value={e.Department_Id}>
                       {e.Department_Name}
                     </option>
                   )
@@ -209,7 +222,7 @@ const CreateUser = () => {
           <button
             type="button"
             class="btn btn-outline-success"
-            onClick={() => createUser()}
+            onClick={() => createEmployee()}
           >
             Submit
           </button>
