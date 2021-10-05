@@ -3,5 +3,5 @@
   "members": "members/",
   "accounts": "accounts/",
   "services": "services/",
-  "login": "login"
+  "login": "/"
 }
