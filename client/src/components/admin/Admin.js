@@ -13,7 +13,8 @@ import Accounts from "./Accounts"
 import Navbar from "./Navbar"
 import CreateUser from "./CreateUser"
 import AddDept from "./AddDept"
-// import Profile from "../employee/Profile"
+import SalaryDet from "../employee/SalaryDet"
+import Profile from "../employee/Profile"
 
 const Admin = () => {
   const [isAdmin] = useState(sessionStorage.getItem("isAdmin"))
@@ -34,6 +35,12 @@ const Admin = () => {
                 </Route>
                 <Route path="/employee/applyLeave" >
                   <Leave />
+                </Route>
+                <Route path="/employee/Profile" >
+                  <Profile />
+                </Route>
+                <Route path="/employee/SalaryDet" >
+                  <SalaryDet />
                 </Route>
                 <Route path="/admin/createUser">
                   <CreateUser />

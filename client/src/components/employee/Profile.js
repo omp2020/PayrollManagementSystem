@@ -5,276 +5,237 @@ import Axios from "axios"
 import links from "../../links.json"
 import token from "../../token.json"
 import ReactLoading from "react-loading"
+import checkIcon from "../../img/check.svg"
+import Toast from "../Toast"
 
 const Profile = () => {
   const iL = sessionStorage.getItem("isLogin") ?? false
   iL || (window.location.href = links.login)
+  const [deptlist, setdept] = useState([])
+  const [list, setList] = useState([])
+  let toastProperties = null
+  const [showtoast, settoast] = useState(false)
+  const id = Math.floor(Math.random() * 101 + 1)
+  const [userData, setUD] = useState({
+    empID: "",
+    mobile: "",
+    fname: "",
+    lname: "",
+    dob: "",
+    designation: "",
+    city: "",
+    state: "",
+    hdate: "",
+    dept: "",
+  })
 
-  const [loader, setLoader] = useState(true)
-  useEffect(() => {
-    Axios.get("/api/admin/listprofile", {
-      
-    })
-      .then((res) => {
-          console.log(res)
-          setPData(res.data)
-        // setTdata(res.data)
-        // setLoader(false)
-      })
-      .catch((err) => console.log("Error", err))
-  }, [])
-  const [tdata, setTdata] = useState([])
-  const [PData, setPData] = useState([
-    // Employee_Id:"",
-    // first_name:"",
-    // last_name:"",
-    // Mobile_No:"",
-    // DOB :"",
-    // Designation:"",
-    // Department_ID:"",
-    //Department_Name:"",
-    // Employee_Role:"",
-    //Hire_Date:"",
-    //City:"",
-    //State:""
-  ])
-
-  const updateTdata = (id) => {
-    console.log("Id fromt data", id)
-    const data = tdata.filter((t) => t.id !== id)
-    setTdata(data)
-  }
-
-  const changeVal = (e, id, t, f) => {
+  const changeVal = (e, field) => {
     let val = e.target.value
-    console.log(e)
-    
-      switch (id) {
-        case "Leave_Id":
-            setLData({ ...LData, Leave_Id: val })
-          break
-        case "Employee_Id":
-            setLData({ ...LData, Employee_Id: val })
-          break
-        case "first_name":
-            setLData({ ...LData, first_name: val })
-          break
-        case "last_name":
-            setLData({ ...LData, last_name: val })
-          break
-        case "leave_date":
-            setLData({ ...LData, leave_date: val })
-          break
-        case "leave_type":
-            setLData({ ...LData, leave_type: val })
-          break
-          case "available_leave":
-            setLData({ ...LData, available_leave: val })
-          break
-          case "status":
-            setLData({ ...LData, status: val })
-          break  
-        default:
-          break
-    
+    switch (field) {
+      case "empID":
+        setUD({ ...userData, empID: val })
+        break
+      case "mobile":
+        setUD({ ...userData, mobile: val })
+        break
+      case "fname":
+        setUD({ ...userData, fname: val })
+        break
+      case "lname":
+        setUD({ ...userData, lname: val })
+        break
+      case "dob":
+        setUD({ ...userData, dob: val })
+        break
+      case "designation":
+        setUD({ ...userData, designation: val })
+        break
+      case "city":
+        setUD({ ...userData, city: val })
+        break
+      case "state":
+        setUD({ ...userData, state: val })
+        break
+      case "hdate":
+        setUD({ ...userData, hdate: val })
+        break
+      case "dept":
+        setUD({ ...userData, dept: val })
+        break
+      default:
+        break
     }
   }
 
-  const handleSave = (f, t) => {
-    
-      
-        }
-    
-  
-
-  const handleNew = () => {
-    
-    console.log("Handle New Clicked")
+  const clearInputs = () => {
+    document.getElementById("create-user").reset()
   }
 
+  const createUser = () => {
+    Axios.get("/api/admin/createUser", {}).then((result) => {
+      if (result.data.error == "0") {
+        toastProperties = {
+          id,
+          title: "Success",
+          description: "This is a success toast component",
+          backgroundColor: "#5cb85c",
+          icon: checkIcon,
+        }
+        setList([...list, toastProperties])
+        settoast(true)
+      } else {
+      }
+    })
+  }
+
+  useEffect(() => {
+    Axios.get("/api/admin/listdept").then((result) => {
+      setdept(result.data)
+    })
+  }, [])
   return (
     <>
-      <div className="container">
-        <div className="h1 p-4">Profile</div>
-        {/* <div className="d-flex justify-content-center">
-          {loader ? (
-            <ReactLoading type="bars" color="black" height={55} width={90} />
-          ) : (
-            ""
-          )}
-        </div>
-     */}
-        <div className="members">
-          <table id="members" className="table">
-            <thead className="thead-light">
-              <tr>
-                <th>Leave ID</th>
-                <th>Employee ID</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Leave Date</th>
-                <th>Leave Type</th>
-                <th>Available Leave</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {LData.map((t) => (
-                <TableData key={t.Leave_Id} mem={t} updateTdata={updateTdata} />
-              ))}
-            </tbody>
-          </table>
+      <div className="contnainer">
+        {showtoast ? (
+          <Toast
+            toastList={list}
+            position="top-right"
+            autoDelete={false}
+            autoDeleteTime={3000}
+          />
+        ) : (
+          ""
+        )}
+        <div className="h1 p-4">Profile Page</div>
+        <form class="p-4" id="create-user">
+          <div class="form-group row">
+            <Input
+              id="empID"
+              itype="text"
+              legend="Employee ID"
+              required="true"
+              onChange={(e) => changeVal(e, "empID")}
+            />
+            <Input
+              id="MobileNo"
+              itype="text"
+              legend="Mobile No."
+              required="true"
+              onChange={(e) => changeVal(e, "mobile")}
+            />
+          </div>
+          <div class="form-group row">
+            <Input
+              id="fname"
+              itype="text"
+              legend="First Name"
+              required="true"
+              onChange={(e) => changeVal(e, "fname")}
+            />
+            <Input
+              id="lname"
+              itype="text"
+              legend="Last Name"
+              required="true"
+              onChange={(e) => changeVal(e, "lname")}
+            />
+          </div>
+          <div class="form-group row">
+            <Input
+              id="dob"
+              itype="date"
+              legend="Date of Birth"
+              required="false"
+              onChange={(e) => changeVal(e, "dob")}
+            />
+            <Input
+              id="designation"
+              itype="text"
+              legend="Designation"
+              required="true"
+              onChange={(e) => changeVal(e, "designation")}
+            />
+          </div>
+          <div class="form-group row">
+            <Input
+              id="city"
+              itype="text"
+              legend="City"
+              required="false"
+              onChange={(e) => changeVal(e, "city")}
+            />
+            <Input
+              id="state"
+              itype="text"
+              legend="State"
+              required="false"
+              onChange={(e) => changeVal(e, "state")}
+            />
+          </div>
+          <div class="form-group row">
+            <Input
+              id="hdate"
+              itype="date"
+              legend="Hire Date"
+              required="true"
+              onChange={(e) => changeVal(e, "hdate")}
+            />
+            <Input
+              id="dept"
+              itype="text"
+              legend="Department"
+              required="true"
+              onChange={(e) => changeVal(e, "dept")}
+            />
+         
+          </div>
+        </form>
+        <div class="d-flex justify-content-center">
+          <button
+            className="btn btn-secondary mr-5"
+            onClick={() => clearInputs()}
+          >
+            Clear
+          </button>
+          <button
+            type="button"
+            class="btn btn-outline-success"
+            onClick={() => createUser()}
+          >
+            Submit
+          </button>
         </div>
       </div>
     </>
   )
 }
 
-const TableData = ({ mem, updateTdata }) => {
-  let [d, setData] = useState(mem)
-  const [modal, setModal] = useState({ Edit: false, Delete: false })
-
-  const handleEdit = () => {
-    console.log(d)
-    setModal({ Edit: true, Delete: false })
-  }
-
-  const handleDeletemodal = () => {
-    console.log("From Delete: ", d)
-    setModal({ Edit: false, Delete: true })
-  }
-
-  const changeVal = (e, id, t, f) => {
-    let val = e.target.value
-    console.log(e)
-    if (t === "edit" && f === "members") {
-      switch (id) {
-        case "Name":
-          setData({ ...d, owner: val })
-          break
-        case "Flat":
-          setData({ ...d, flat_no: val })
-          break
-        case "Contact":
-          setData({ ...d, contact: val })
-          break
-        case "Parking":
-          setData({ ...d, parking: val })
-          break
-        case "sel1":
-          val === "Rented" ? (val = 1) : (val = 0)
-          setData({ ...d, status: val })
-          break
-        case "Wing":
-          setData({ ...d, wing: val })
-          break
-        default:
-          break
-      }
-    }
-  }
-
-  const handleSave = (f, t) => {
-    if (f === "members" && t === "edit") {
-      console.log(d)
-      Axios.put(links.home + links.members, d, {
-        params: { id: d.id },
-        headers: {
-          Authorization: `token ${token.token}`,
-        },
-      })
-        .then((res) => {
-          console.log("Success")
-        })
-        .catch((err) => {
-          console.log("Error", err)
-        })
-    }
-  }
-
-  const handleDelete = (f, t) => {
-    if (f === "members" && t === "delete") {
-      console.log("ID:", d)
-      Axios.delete(links.home + links.members, {
-        params: { id: d.id },
-        headers: {
-          Authorization: `token ${token.token}`,
-        },
-      })
-        .then(() => {
-          console.log("Success")
-          setModal({ Edit: false, Delete: false })
-          updateTdata(d.id)
-        })
-        .catch((err) => {
-          console.log("Error", err)
-        })
-    }
-  }
-
+const Input = ({ id, itype, type, legend, onChange, required }) => {
   return (
     <>
-      <tr>
-        <td>{d.Leave_Id}</td>
-        <td>{d.Employee_Id}</td>
-        <td>{d.first_name}</td>
-        <td>{d.last_name}</td>
-        <td>{d.leave_date}</td>
-        <td>{d.leave_type}</td>
-        <td>{d.available_leave}</td>
-
-        <td>
-          <button
-            type="button"
-            class="btn btn-success btn-sm"
-            data-toggle="modal"
-            data-target="#Edit"
-            onClick={() => {
-              handleEdit()
-            }}
-          >
-            Accept
-          </button>
-          <button
-            type="button"
-            class="btn btn-outline-danger btn-sm"
-            data-toggle="modal"
-            data-target="#Delete"
-            style={{ marginLeft: "5px" }}
-            onClick={() => {
-              handleDeletemodal()
-            }}
-          >
-            Reject
-          </button>
-        </td>
-      </tr>
-      {modal.Edit ? (
-        <Modal
-          data={d}
-          type="edit"
-          from="members"
-          changeVal={changeVal}
-          handleSave={handleSave}
-          handleDelete={handleDelete}
-        />
-      ) : (
-        ""
-      )}
-      {modal.Delete ? (
-        <Modal
-          data={d}
-          type="delete"
-          from="members"
-          changeVal={changeVal}
-          handleSave={handleSave}
-          handleDelete={handleDelete}
-        />
-      ) : (
-        ""
-      )}
+      <label for={id} class="col-sm-2 col-form-label">
+        {legend}
+      </label>
+      <div class="col-sm-4">
+        {required == "true" ? (
+          <input
+            type={itype}
+            class="form-control"
+            id={id}
+            onChange={(e) => onChange(e, type, legend)}
+            required disabled
+          />
+        ) : (
+          <input
+            type={itype}
+            class="form-control"
+            id={id}
+            onChange={(e) => onChange(e, type, legend)}
+             disabled
+          />
+        )}
+      </div>
     </>
   )
 }
-
 export default Profile
