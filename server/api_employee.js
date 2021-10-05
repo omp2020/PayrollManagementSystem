@@ -4,7 +4,7 @@ var mysql = require("mysql")
 var con = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "admin@sa",
+  password: "P@vitra3131",
   database: "pms",
 })
 
@@ -33,6 +33,7 @@ router.get("/createdept", function (req, res) {
   )
 })
 
+
 router.get("/listdept", function (req, res) {
   let arr = []
   con.query("SELECT * FROM department", function (err, result) {
@@ -42,6 +43,20 @@ router.get("/listdept", function (req, res) {
         arr.push(result[i])
       }
       res.send(arr)
+    }
+  })
+})
+
+router.get("/employee/listsal", function (req, res) {
+  let arr = []
+  con.query("SELECT * FROM Salary_D", function (err, result) {
+    if (err) throw err
+    else {
+      for (var i = 0; i < result.length; i++) {
+        arr.push(result[i])
+      }
+      res.send(arr)
+      // console.log(result);
     }
   })
 })

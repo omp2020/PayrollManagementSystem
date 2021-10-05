@@ -13,11 +13,12 @@ import Accounts from "./Accounts"
 import Navbar from "./Navbar"
 import CreateUser from "./CreateUser"
 import AddDept from "./AddDept"
+import SalaryDet from "../employee/SalaryDet"
+import Profile from "../employee/Profile"
 import EmpDetails from "../employee/Employee_details"
 import Department from "./Department"
 import axios from "axios"
 import ChangePassword from "../ChangePassword"
-// import Profile from "../employee/Profile"
 
 const Admin = () => {
   const [isAdmin] = useState(sessionStorage.getItem("isAdmin"))
@@ -53,6 +54,12 @@ const Admin = () => {
                 </Route>
                 <Route path="/employee/applyLeave">
                   <Leave />
+                </Route>
+                <Route path="/employee/Profile" >
+                  <Profile />
+                </Route>
+                <Route path="/employee/SalaryDet" >
+                  <SalaryDet />
                 </Route>
                 <Route path="/admin/createUser">
                   <CreateUser />
