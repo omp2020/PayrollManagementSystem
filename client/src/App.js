@@ -17,9 +17,9 @@ function App() {
           <Route path="/employee">
             <Admin />
           </Route>
-          {/* <Route path="/members">
-            <Members />
-          </Route> */}
+          <Route path="/changePassword">
+            <Admin />
+          </Route>
           <Route path="*">
             <h1>404 Page Not Found</h1>
           </Route>
