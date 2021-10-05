@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import Sidebar from "./Sidebar"
 import "../../css/admin.css"
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
@@ -15,12 +15,28 @@ import CreateUser from "./CreateUser"
 import AddDept from "./AddDept"
 import SalaryDet from "../employee/SalaryDet"
 import Profile from "../employee/Profile"
+import EmpDetails from "../employee/Employee_details"
+import Department from "./Department"
+import axios from "axios"
+import ChangePassword from "../ChangePassword"
 
 const Admin = () => {
   const [isAdmin] = useState(sessionStorage.getItem("isAdmin"))
+  const [name, setName] = useState()
+  useEffect(() => {
+    console.log(sessionStorage.getItem("ID"))
+    axios
+      .get("/getName", { params: { id: sessionStorage.getItem("ID") } })
+      .then((result) => {
+        setName(result.data.name)
+      })
+  }, [])
   return (
     <>
-      <Navbar employee={isAdmin == "true" ? "Admin" : "Employee"} />
+      <Navbar
+        employee={isAdmin == "true" ? "Admin" : "Employee"}
+        empname={name}
+      />
       <div className="container-fluid" style={{ backgroundColor: "white" }}>
         <Router>
           <div className="row">
@@ -33,7 +49,10 @@ const Admin = () => {
                 <Route path="/employee" exact>
                   <EmployeeMain />
                 </Route>
-                <Route path="/employee/applyLeave" >
+                <Route path="/changePassword">
+                  <ChangePassword />
+                </Route>
+                <Route path="/employee/applyLeave">
                   <Leave />
                 </Route>
                 <Route path="/employee/Profile" >
@@ -62,6 +81,12 @@ const Admin = () => {
                 </Route>
                 <Route path="/admin/accounts">
                   <Accounts />
+                </Route>
+                <Route path="/emp/details">
+                  <EmpDetails />
+                </Route>
+                <Route path="/admin/department">
+                  <EmpDetails />
                 </Route>
                 {/* <Route path="/employee/Profile">
                   <Profile />
