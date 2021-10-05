@@ -4,19 +4,19 @@ var mysql = require("mysql")
 var con = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "admin@sa",
+  password: "P@vitra3131",
   database: "pms",
 })
 
 con.connect(function (err) {
   if (err) throw err
 })
-router.get("/applyLeave",function (req, res){
-    let data = JSON.parse(req.query.data)
-    con.query(
-        "INSERT INTO "
-    )
+
+router.get("/applyLeave", function (req, res) {
+  let data = JSON.parse(req.query.data)
+  con.query("INSERT INTO ")
 })
+
 router.get("/createdept", function (req, res) {
   let data = JSON.parse(req.query.data)
   con.query(
@@ -35,6 +35,7 @@ router.get("/createdept", function (req, res) {
   )
 })
 
+
 router.get("/listdept", function (req, res) {
   let arr = []
   con.query("SELECT * FROM department", function (err, result) {
@@ -46,6 +47,39 @@ router.get("/listdept", function (req, res) {
       res.send(arr)
     }
   })
+})
+
+router.get("/employee/listsal", function (req, res) {
+  let arr = []
+  con.query("SELECT * FROM Salary_D", function (err, result) {
+    if (err) throw err
+    else {
+      for (var i = 0; i < result.length; i++) {
+        arr.push(result[i])
+      }
+      res.send(arr)
+      // console.log(result);
+    }
+  })
+})
+
+router.get("/availableLeave", function (req, res) {
+  con.query(
+    "SELECT Available_Leave as leaves FROM leave_details WHERE Status='Approved' AND Employee_Id = ? ORDER BY Leave_Id DESC  LIMIT 1;",
+    [req.query.id],
+    function (err, result) {
+      if (err) throw err
+      else {
+        if (result[0] == undefined) {
+          let data = { leaves: "Error in Reading Leaves" }
+          res.send(data)
+        } else {
+          let data = { leaves: result[0].leaves }
+          res.send(data)
+        }
+      }
+    }
+  )
 })
 
 module.exports = router
