@@ -16,7 +16,7 @@ var con = mysql.createConnection({
   host: "localhost",
   user: "root",
   password: "YourRootPassword",
-  password: "P@vitra3131",
+  password: "admin@sa",
   database: "pms",
 })
 
@@ -27,25 +27,23 @@ con.connect(function (err) {
 
 app.get("/login", (req, res) => {
   con.query(
-    "SELECT passw, salt ,is_admin as result, COUNT(*) as count FROM login_details WHERE username = ? ",
+    "SELECT passw, salt ,is_admin as result, Employee_Id as id, COUNT(*) as count FROM login_details WHERE username = ? ",
     [req.query.username],
-
     function (err, result, fields) {
       var data
       if (err) {
         data = { error: 1 }
         res.send(data)
       } else {
-
         if (result[0].count > 0) {
           let hash = crypto
             .pbkdf2Sync(req.query.password, result[0].salt, 1000, 64, `sha512`)
             .toString(`hex`)
           if (hash == result[0].passw && result[0].result == 1) {
-            data = { error: 0, isadmin: 1 }
+            data = { error: 0, isadmin: 1, id: result[0].id }
             res.send(data)
           } else if (hash == result[0].passw) {
-            data = { error: 0, isadmin: 0 }
+            data = { error: 0, isadmin: 0, id: result[0].id }
             res.send(data)
           } else {
             data = { error: 1, errormsg: "Username/Password Invalid" }
@@ -55,11 +53,71 @@ app.get("/login", (req, res) => {
           data = { error: 1, errormsg: "User not found" }
           res.send(data)
         }
-
       }
     }
   )
 })
+
+app.get("/getName", (req, res) => {
+  con.query(
+    "SELECT CONCAT(First_Name,' ', Last_Name) as name FROM employee WHERE Employee_Id = ?",
+    [req.query.id],
+    function (err, result) {
+      if (err) throw err
+      else {
+        let data = { name: result[0].name }
+        res.send(data)
+      }
+    }
+  )
+})
+
+app.get("/changePass", (req, res) => {
+  console.log(req.query)
+  con.query(
+    "SELECT passw, salt ,COUNT(*) as count FROM login_details WHERE Employee_Id = ? ",
+    [req.query.id],
+    function (err, result, fields) {
+      var data
+      if (err) {
+        data = { error: 1 }
+        res.send(data)
+      } else {
+        console.log("Result[0]Count", result[0].count)
+        if (result[0].count > 0) {
+          let hash = crypto
+            .pbkdf2Sync(req.query.old, result[0].salt, 1000, 64, `sha512`)
+            .toString(`hex`)
+          if (hash == result[0].passw) {
+            let salt = crypto.randomBytes(16).toString("hex")
+            let hash = crypto
+              .pbkdf2Sync(req.query.new, salt, 1000, 64, `sha512`)
+              .toString(`hex`)
+            con.query(
+              "UPDATE login_details SET passw = ?, salt = ? WHERE Employee_Id = ?",
+              [hash, salt, req.query.id],
+              function (err, result) {
+                if (err) throw err
+                else {
+                  data = { error: 0 }
+                  res.send(data)
+                }
+              }
+            )
+          } else {
+            console.log("Error Here Old Pass not matched")
+            data = { error: 1 }
+            res.send(data)
+          }
+        } else {
+          data = { error: 1 }
+          res.send(data)
+        }
+      }
+    }
+  )
+})
+
 app.get("/api/emp/details", (req, res) => {
   con.query(
     "SELECT * FROM employee ",
@@ -70,7 +128,7 @@ app.get("/api/emp/details", (req, res) => {
         data = { error: 1 }
         res.send(data)
       } else {
-        console.log (result)
+        console.log(result)
       }
     }
   )

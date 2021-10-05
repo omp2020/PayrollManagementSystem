@@ -1,12 +1,15 @@
 import React, { useState } from "react"
 import { Redirect } from "react-router-dom"
 
-const Navbar = ({ employee }) => {
+const Navbar = ({ employee, empname }) => {
   const [isLogout, setLogout] = useState(false)
-
+  const [changePassword, setChangePassword] = useState(false)
   const handleLogout = () => {
     setLogout(true)
-    localStorage.clear()
+    sessionStorage.clear()
+  }
+  const handlechangePass = () => {
+    setChangePassword(true)
   }
   return (
     <>
@@ -39,9 +42,18 @@ const Navbar = ({ employee }) => {
                 d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"
               />
             </svg>
-            &nbsp;&nbsp;&nbsp; Hello, {employee}
+            &nbsp;&nbsp;&nbsp; Hello, {empname}
           </button>
           <div class="dropdown-menu dropdown-menu-right">
+            <button
+              class="dropdown-item"
+              type="button"
+              onClick={() => {
+                handlechangePass()
+              }}
+            >
+              Change Password
+            </button>
             <button
               class="dropdown-item"
               type="button"
@@ -51,6 +63,7 @@ const Navbar = ({ employee }) => {
             >
               Logout
             </button>
+            {changePassword ? <Redirect to="/changePassword" /> : ""}
             {isLogout ? <Redirect to="/" /> : ""}
           </div>
         </div>
