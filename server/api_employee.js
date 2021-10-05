@@ -11,12 +11,7 @@ var con = mysql.createConnection({
 con.connect(function (err) {
   if (err) throw err
 })
-router.get("/applyLeave",function (req, res){
-    let data = JSON.parse(req.query.data)
-    con.query(
-        "INSERT INTO "
-    )
-})
+
 router.get("/createdept", function (req, res) {
   let data = JSON.parse(req.query.data)
   con.query(
