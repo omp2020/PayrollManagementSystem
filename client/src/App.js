@@ -2,7 +2,7 @@ import "./App.css"
 import Login from "./components/Login"
 import Admin from "./components/admin/Admin"
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
-
+import ChangePassword from "./components/ChangePassword"
 function App() {
   return (
     <>
@@ -18,7 +18,7 @@ function App() {
             <Admin />
           </Route>
           <Route path="/changePassword">
-            <Admin />
+            <ChangePassword />
           </Route>
           <Route path="*">
             <h1>404 Page Not Found</h1>

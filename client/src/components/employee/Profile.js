@@ -3,9 +3,11 @@ import "../../css/members.css"
 import Axios from "axios"
 import links from "../../links.json"
 
+
 const Profile = () => {
   const iL = sessionStorage.getItem("isLogin") ?? false
   iL || (window.location.href = links.login)
+
   const [userData, setUD] = useState({})
 
   useEffect(() => {
@@ -17,7 +19,6 @@ const Profile = () => {
       setUD(result.data)
     })
   }, [])
-
   return (
     <>
       <div className="contnainer">
@@ -25,6 +26,7 @@ const Profile = () => {
         <form class="p-4" id="create-user">
           <div class="form-group row">
             <Input
+              
               id="empID"
               data={userData.Employee_Id}
               itype="text"
@@ -93,6 +95,7 @@ const Profile = () => {
     </>
   )
 }
+
 
 const Input = ({ id, data, itype, legend }) => {
   return (

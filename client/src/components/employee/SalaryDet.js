@@ -11,7 +11,7 @@ const SalaryDet = () => {
 
   const [loader, setLoader] = useState(true)
   useEffect(() => {
-    Axios.get("/api/admin/listsalary", {
+    Axios.get("/api/employee/listsalary", {params: { id: sessionStorage.getItem("ID") }
      
     })
       .then((res) => {
@@ -104,7 +104,6 @@ const SalaryDet = () => {
                 <th>Month</th>
                 <th>Year</th>
                 <th>Salary</th>
-                <th>Status</th>
               </tr>
             </thead>
             <tbody>
@@ -213,31 +212,7 @@ const changeVal = (e, id, t, f) => {
         <td>{d.year}</td>
         <td>{d.salary}</td>
         
-        <td>
-          <button
-            type="button"
-            class="btn btn-success btn-sm"
-            data-toggle="modal"
-            data-target="#Edit"
-            onClick={() => {
-              handleEdit()
-            }}
-          >
-            Paid
-          </button>
-          <button
-            type="button"
-            class="btn btn-outline-danger btn-sm"
-            data-toggle="modal"
-            data-target="#Delete"
-            style={{ marginLeft: "5px" }}
-            onClick={() => {
-              handleDeletemodal()
-            }}
-          >
-            Pending
-          </button>
-        </td>
+       
       </tr>
       {modal.Edit ? (
         <Modal
