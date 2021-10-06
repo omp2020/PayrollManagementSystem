@@ -3,13 +3,9 @@ import { Redirect } from "react-router-dom"
 
 const Navbar = ({ employee, empname }) => {
   const [isLogout, setLogout] = useState(false)
-  const [changePassword, setChangePassword] = useState(false)
   const handleLogout = () => {
     setLogout(true)
     sessionStorage.clear()
-  }
-  const handlechangePass = () => {
-    setChangePassword(true)
   }
   return (
     <>
@@ -48,8 +44,9 @@ const Navbar = ({ employee, empname }) => {
             <button
               class="dropdown-item"
               type="button"
-              onClick={() => {
-                handlechangePass()
+              onClick={(e) => {
+                e.preventDefault()
+                window.location.href = "/changePassword"
               }}
             >
               Change Password
@@ -63,7 +60,6 @@ const Navbar = ({ employee, empname }) => {
             >
               Logout
             </button>
-            {changePassword ? <Redirect to="/changePassword" /> : ""}
             {isLogout ? <Redirect to="/" /> : ""}
           </div>
         </div>

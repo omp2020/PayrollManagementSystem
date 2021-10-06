@@ -4,7 +4,7 @@ var mysql = require("mysql")
 var con = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "P@vitra3131",
+  password: "admin@sa",
   database: "pms",
 })
 
@@ -34,7 +34,6 @@ router.get("/createdept", function (req, res) {
     }
   )
 })
-
 
 router.get("/listdept", function (req, res) {
   let arr = []
@@ -85,19 +84,20 @@ router.get("/availableLeave", function (req, res) {
 
 router.get("/eDet", function (req, res) {
   let arr = {}
-  console.log(req.query.id)
-  con.query("SELECT * FROM employee WHERE Employee_Id=?",[req.query.id] ,function (err, result) {
-    if (err) throw err
-    else {
-      arr = result
-      // for (var i = 0; i < result.length; i++) {
-      //   arr.push(result[i])
-      // }
-      res.send(arr)
-      // console.log(result);
+  // console.log(req.query.id)
+  con.query(
+    "SELECT * FROM employee WHERE Employee_Id=?",
+    [req.query.id],
+    function (err, result) {
+      if (err) throw err
+      else {
+        arr = result[0]
+        res.send(arr)
+      }
     }
-  })
+  )
 })
+
 
 router.get("/listsalary", function (req, res) {
   let arr = []
@@ -109,8 +109,8 @@ router.get("/listsalary", function (req, res) {
         arr.push(result[i])
       }
       res.send(arr)
-      // console.log(result);
     }
   })
 })
+
 module.exports = router

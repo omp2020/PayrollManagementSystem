@@ -56,10 +56,10 @@ const Admin = () => {
                 <Route path="/employee/applyLeave">
                   <Leave />
                 </Route>
-                <Route path="/employee/Profile" >
+                <Route path="/employee/Profile">
                   <Profile />
                 </Route>
-                <Route path="/employee/SalaryDet" >
+                <Route path="/employee/SalaryDet">
                   <SalaryDet />
                 </Route>
                 <Route path="/admin/createUser">
