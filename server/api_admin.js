@@ -4,7 +4,7 @@ var mysql = require("mysql")
 var con = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "admin@sa",
+  password: "P@vitra3131",
   database: "pms",
 })
 
@@ -99,7 +99,7 @@ router.get("/listdept", function (req, res) {
 
 router.get("/listpleave", function (req, res) {
   let arr = []
-  con.query("SELECT * FROM AccRejLeave", function (err, result) {
+  con.query("SELECT * FROM AccRejLeave WHERE status like 'Pending'", function (err, result) {
     if (err) throw err
     else {
       for (var i = 0; i < result.length; i++) {
@@ -125,4 +125,81 @@ router.get("/listsalary", function (req, res) {
   })
 })
 
+router.get("/listpay", function (req, res) {
+  let arr = []
+  con.query("SELECT * FROM payment", function (err, result) {
+    if (err) throw err
+    else {
+      for (var i = 0; i < result.length; i++) {
+        arr.push(result[i])
+      }
+      res.send(arr)
+      // console.log(result);
+    }
+  })
+})
+
+router.get("/Edet", function (req, res) {
+  let arr = []
+  con.query("SELECT * FROM employee", function (err, result) {
+    if (err) throw err
+    else {
+      for (var i = 0; i < result.length; i++) {
+        arr.push(result[i])
+      }
+      res.send(arr)
+      
+      // console.log(result);
+    }
+  })
+})
+router.get("/Ddet", function (req, res) {
+  let arr = []
+  con.query("SELECT * FROM department", function (err, result) {
+    if (err) throw err
+    else {
+      for (var i = 0; i < result.length; i++) {
+        arr.push(result[i])
+      }
+      res.send(arr)
+      
+      // console.log(result);
+    }
+  })
+})
+router.get("/AccLeave", function (req, res) {
+  let arr = []
+  con.query("CALL UPDATE_SALARY(?,?)", [req.query.id,req.query.status],function(err, result) {
+    if (err) throw err
+    else {
+      var data
+      if (err) {
+        data = { error: 1 }
+        res.send(data)
+      } else {
+        data = { error: 0 }
+        res.send(data)
+      }
+      
+    }
+  })
+})
+
+router.get("/payroll", function (req, res) {
+  let arr = []
+  con.query("UPDATE pay SET pay_status=1 WHERE Employee_Id=?", [req.query.id],function(err, result) {
+    if (err) throw err
+    else {
+      var data
+      if (err) {
+        data = { error: 1 }
+        res.send(data)
+      } else {
+        data = { error: 0 }
+        res.send(data)
+      }
+      
+    }
+  })
+})
 module.exports = router

@@ -5,18 +5,28 @@ import Axios from "axios"
 import links from "../../links.json"
 import token from "../../token.json"
 import ReactLoading from "react-loading"
+import Toast from "../Toast"
+import checkIcon from "../../img/check.svg"
+import errorIcon from "../../img/error.svg"
 
 const AccRejLeave = () => {
   const iL = sessionStorage.getItem("isLogin") ?? false
   iL || (window.location.href = links.login)
-
+  // const [list, setList] = useState([])
+  // let toastProperties = null
+  // const [showtoast, settoast] = useState(false)
+  // const id = Math.floor(Math.random() * 101 + 1)
   const [loader, setLoader] = useState(true)
   useEffect(() => {
     Axios.get("/api/admin/listpleave", {
       
     })
       .then((res) => {
-          console.log(res)
+        for (var i = 0; i < res.data.length; i++) {
+          // arr.push(result[i])
+          res.data[i].leave_date = res.data[i].leave_date.split("T")[0]
+        }
+          console.log(res.data)
           setLData(res.data)
         // setTdata(res.data)
         // setLoader(false)
@@ -90,8 +100,11 @@ const AccRejLeave = () => {
 
   return (
     <>
+    
       <div className="container">
+      
         <div className="h1 p-4">Check Leave Applications</div>
+
         {/* <div className="d-flex justify-content-center">
           {loader ? (
             <ReactLoading type="bars" color="black" height={55} width={90} />
@@ -129,15 +142,67 @@ const AccRejLeave = () => {
 const TableData = ({ mem, updateTdata }) => {
   let [d, setData] = useState(mem)
   const [modal, setModal] = useState({ Edit: false, Delete: false })
-
+  const [list, setList] = useState([])
+  let toastProperties = null
+  const [showtoast, settoast] = useState(false)
+  const id = Math.floor(Math.random() * 101 + 1)
   const handleEdit = () => {
     console.log(d)
-    setModal({ Edit: true, Delete: false })
+    Axios.get("/api/admin/Accleave", {params: { id: d.Leave_Id ,status:'Approved'}})
+    .then((result) => {
+      if (result.data.error == "0") {
+        toastProperties = {
+          id,
+          title: "Success",
+          description: "Leave application accepted",
+          backgroundColor: "#5cb85c",
+          icon: checkIcon,
+        }
+        setList([...list, toastProperties])
+        settoast(true)
+      } else {
+        toastProperties = {
+          id,
+          title: "Danger",
+          description: "Error",
+          backgroundColor: "#d9534f",
+          icon: errorIcon,
+        }
+        setList([...list, toastProperties])
+        settoast(true)
+      }
+    })
+    // setModal({ Edit: true, Delete: false })
+    
   }
 
   const handleDeletemodal = () => {
     console.log("From Delete: ", d)
-    setModal({ Edit: false, Delete: true })
+    Axios.get("/api/admin/Accleave", {params: { id: d.Leave_Id ,status:'Reject'}})
+    .then((result) => {
+      if (result.data.error == "0") {
+        toastProperties = {
+          id,
+          title: "Success",
+          description: "Leave Application Rejected.",
+          backgroundColor: "#E09A07",
+          icon: checkIcon,
+        }
+        setList([...list, toastProperties])
+        settoast(true)
+      } else {
+        toastProperties = {
+          id,
+          title: "Danger",
+          description: "Error",
+          backgroundColor: "#d9534f",
+          icon: errorIcon,
+        }
+        setList([...list, toastProperties])
+        settoast(true)
+      }
+    })
+    // setModal({ Edit: false, Delete: true })
   }
 
   const changeVal = (e, id, t, f) => {
@@ -210,6 +275,16 @@ const TableData = ({ mem, updateTdata }) => {
 
   return (
     <>
+    {showtoast ? (
+          <Toast
+            toastList={list}
+            position="top-right"
+            autoDelete={false}
+            autoDeleteTime="3000"
+          />
+        ) : (
+          ""
+        )}
       <tr>
         <td>{d.Leave_Id}</td>
         <td>{d.Employee_Id}</td>
