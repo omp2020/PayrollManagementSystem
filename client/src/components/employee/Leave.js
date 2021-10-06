@@ -28,8 +28,7 @@ const Leave = () =>{
             <form style={{marginLeft:"200px"}} onSubmit={handleSubmit}>
               <h2 style={{marginTop:"10px"}}>Apply For Leave</h2>
               <br />
-              <label className="mr-sm-2">Enter Employee ID: </label>
-              <input type="number" name="emp_id" id="" onChange={handleLeave}/>
+              
   <div className="form-row">
   <div className="col-auto my-1">
     
