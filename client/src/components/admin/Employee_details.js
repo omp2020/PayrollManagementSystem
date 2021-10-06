@@ -6,19 +6,23 @@ import links from "../../links.json"
 import token from "../../token.json"
 import ReactLoading from "react-loading"
 
-const Department = () => {
+const Employee_details = () => {
   const iL = sessionStorage.getItem("isLogin") ?? false
   iL || (window.location.href = links.login)
 
   const [loader, setLoader] = useState(true)
   useEffect(() => {
-    Axios.get("/api/admin/listdept", {
+    Axios.get("/api/admin/Edet", {
      
     })
       .then((res) => {
         // console.log(res)
         // res.data.DOB = res.data.DOB.split("T")[0]
-        
+        for (var i = 0; i < res.data.length; i++) {
+          // arr.push(result[i])
+          res.data[i].DOB = res.data[i].DOB.split("T")[0]
+          res.data[i].Hire_Date = res.data[i].Hire_Date.split("T")[0]
+        }
         // console.log(res.data[0])
         
         // res.data.Hire_Date = res.data.Hire_Date.split("T")[0]
@@ -36,7 +40,7 @@ const Department = () => {
   return (
     <>
       <div className="container">
-        <div className="h1 p-4">Department Details</div>
+        <div className="h1 p-4">Employee Details</div>
         {/* <div className="d-flex justify-content-center">
           {loader ? (
             <ReactLoading type="bars" color="black" height={55} width={90} />
@@ -49,13 +53,22 @@ const Department = () => {
           <table id="members" className="table">
             <thead className="thead-light">
             <tr>
-                <th>Department ID</th>
-                <th>Department Name</th>
+                <th>ID</th>
+                <th>First name</th>
+                <th>Last name</th>
+                <th>Mobile</th>
+                <th>DOB</th>
+                <th>Designation</th>
+                <th>DeptID</th>
+                <th>Role</th>
+                <th>Hire date</th>
+                <th>City</th>
+                <th>State</th>
               </tr>
             </thead>
             <tbody>
               {tdata.map((e) => (
-                <TableData key={e.Department_Id} mem={e} updateTdata={updateTdata} />
+                <TableData key={e.Employee_Id} mem={e} updateTdata={updateTdata} />
               ))}
             </tbody>
           </table>
@@ -73,12 +86,22 @@ const TableData = ({ mem, updateTdata }) => {
     <>
 
       <tr>
-        <td>{d.Department_Id}</td>
-        <td>{d.Department_Name}</td>
+        <td>{d.Employee_Id}</td>
+        <td>{d.First_Name}</td>
+        <td>{d.Last_Name}</td>
+        <td>{d.Mobile_No}</td>
+        <td>{d.DOB}</td>
+        <td>{d.Designation}</td>
+        <td>{d.Department_ID}</td>
+        <td>{d.Employee_Role}</td>
+        <td>{d.Hire_Date}</td>
+        <td>{d.City}</td>
+        <td>{d.State}</td>
+        
       </tr>
       
     </>
   )
 }
 
-export default Department
+export default Employee_details

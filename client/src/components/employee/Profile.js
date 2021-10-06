@@ -8,6 +8,7 @@ import ReactLoading from "react-loading"
 import checkIcon from "../../img/check.svg"
 import Toast from "../Toast"
 
+
 const Profile = () => {
   const iL = sessionStorage.getItem("isLogin") ?? false
   iL || (window.location.href = links.login)
@@ -16,18 +17,7 @@ const Profile = () => {
   let toastProperties = null
   const [showtoast, settoast] = useState(false)
   const id = Math.floor(Math.random() * 101 + 1)
-  const [userData, setUD] = useState({
-    empID: "",
-    mobile: "",
-    fname: "",
-    lname: "",
-    dob: "",
-    designation: "",
-    city: "",
-    state: "",
-    hdate: "",
-    dept: "",
-  })
+  const [userData, setUD] = useState([])
 
   const changeVal = (e, field) => {
     let val = e.target.value
@@ -87,12 +77,29 @@ const Profile = () => {
       }
     })
   }
-
+ 
   useEffect(() => {
-    Axios.get("/api/admin/listdept").then((result) => {
-      setdept(result.data)
+    // console.log(sessionStorage.getItem("ID"))
+    Axios.get("/api/employee/eDet", { params: { id: sessionStorage.getItem("ID") } }).then((result) => {
+      // setdept(result.data)
+      // console.log(result)
+      setUD(result.data)
+      console.log(userData)
+      console.log(result.data)
+      console.log(result.data.City)
     })
   }, [])
+//   City: "Mumbai"
+// DOB: "2001-08-06T18:30:00.000Z"
+// Department_ID: 12
+// Designation: "Director"
+// Employee_Id: 101
+// Employee_Role: "Technical"
+// First_Name: "Om"
+// Hire_Date: "2020-08-19T18:30:00.000Z"
+// Last_Name: "Patel"
+// Mobile_No: "8918201820"
+// State: "Maharashtra"
   return (
     <>
       <div className="contnainer">
@@ -110,7 +117,9 @@ const Profile = () => {
         <form class="p-4" id="create-user">
           <div class="form-group row">
             <Input
+              
               id="empID"
+              // value = {userData.Employee_Id}
               itype="text"
               legend="Employee ID"
               required="true"
@@ -210,7 +219,7 @@ const Profile = () => {
   )
 }
 
-const Input = ({ id, itype, type, legend, onChange, required }) => {
+const Input = ({ id,data, itype, type, legend, onChange, required }) => {
   return (
     <>
       <label for={id} class="col-sm-2 col-form-label">
@@ -222,6 +231,7 @@ const Input = ({ id, itype, type, legend, onChange, required }) => {
             type={itype}
             class="form-control"
             id={id}
+            value = {data}
             onChange={(e) => onChange(e, type, legend)}
             required disabled
           />
@@ -230,6 +240,7 @@ const Input = ({ id, itype, type, legend, onChange, required }) => {
             type={itype}
             class="form-control"
             id={id}
+            value = {data}
             onChange={(e) => onChange(e, type, legend)}
              disabled
           />

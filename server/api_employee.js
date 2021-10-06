@@ -82,4 +82,35 @@ router.get("/availableLeave", function (req, res) {
   )
 })
 
+
+router.get("/eDet", function (req, res) {
+  let arr = {}
+  console.log(req.query.id)
+  con.query("SELECT * FROM employee WHERE Employee_Id=?",[req.query.id] ,function (err, result) {
+    if (err) throw err
+    else {
+      arr = result
+      // for (var i = 0; i < result.length; i++) {
+      //   arr.push(result[i])
+      // }
+      res.send(arr)
+      // console.log(result);
+    }
+  })
+})
+
+router.get("/listsalary", function (req, res) {
+  let arr = []
+  console.log(req.query.id)
+  con.query("SELECT * FROM Salary_D WHERE Employee_Id=?",[req.query.id], function (err, result) {
+    if (err) throw err
+    else {
+      for (var i = 0; i < result.length; i++) {
+        arr.push(result[i])
+      }
+      res.send(arr)
+      // console.log(result);
+    }
+  })
+})
 module.exports = router

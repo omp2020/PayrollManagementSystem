@@ -15,16 +15,17 @@ import CreateUser from "./CreateUser"
 import AddDept from "./AddDept"
 import SalaryDet from "../employee/SalaryDet"
 import Profile from "../employee/Profile"
-import EmpDetails from "../employee/Employee_details"
+import EmpDetails from "./Employee_details"
 import Department from "./Department"
 import axios from "axios"
 import ChangePassword from "../ChangePassword"
+import Pay from "./Pay"
 
 const Admin = () => {
   const [isAdmin] = useState(sessionStorage.getItem("isAdmin"))
   const [name, setName] = useState()
   useEffect(() => {
-    console.log(sessionStorage.getItem("ID"))
+    // console.log(sessionStorage.getItem("ID"))
     axios
       .get("/getName", { params: { id: sessionStorage.getItem("ID") } })
       .then((result) => {
@@ -76,17 +77,20 @@ const Admin = () => {
                 <Route path="/admin/Salary">
                   <Salary />
                 </Route>
+                <Route path="/admin/Pay">
+                  <Pay />
+                </Route>
                 <Route path="/admin/services">
                   <Services />
                 </Route>
                 <Route path="/admin/accounts">
                   <Accounts />
                 </Route>
-                <Route path="/emp/details">
+                <Route path="/admin/Employee_details">
                   <EmpDetails />
                 </Route>
-                <Route path="/admin/department">
-                  <EmpDetails />
+                <Route path="/admin/Department">
+                  <Department />
                 </Route>
                 {/* <Route path="/employee/Profile">
                   <Profile />

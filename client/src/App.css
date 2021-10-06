@@ -1,3 +1,6 @@
 body {
-  background-image: url("../src/img/4957.jpg");
+  /* background-image: url("../src/img/log_bg.png"); */
+  /* background-image: linear-gradient(to bottom right, rgb(15, 61, 187),rgb(255, 255, 255));*/
+  background-image: linear-gradient( rgb(13, 51, 175), transparent);
+    height: 92.7vh;
 }

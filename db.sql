@@ -76,3 +76,58 @@ CREATE TABLE Login_Details(
  REFERENCES Employee(Employee_Id)
  );
 insert into Employee(
+
+
+--6/10
+CREATE TABLE `pms`.`pay` (
+  `Employee_Id` INT NOT NULL,
+  `sal_am` INT NOT NULL,
+  PRIMARY KEY (`Employee_Id`));
+
+
+USE `pms`;
+DROP procedure IF EXISTS `UPDATE_SALARY`;
+
+DELIMITER $$
+USE `pms`$$
+CREATE PROCEDURE `UPDATE_SALARY` (IN lid INT, IN status varchar(20))
+BEGIN
+DECLARE empid INT DEFAULT 0;
+DECLARE sal INT DEFAULT 0;
+SELECT Employee_Id INTO empid FROM leave_details WHERE Leave_Id = lid;
+SELECT salary_am INTO sal FROM salary WHERE Employee_Id = empid;
+IF status = 'Approved' THEN
+	UPDATE leave_details SET status = 'Approved' WHERE Leave_id = lid;
+    UPDATE salary SET salary_am = sal - 100 WHERE Employee_Id = empid;
+ELSEIF status = 'Reject' THEN
+	UPDATE salary SET status = 'Reject' WHERE Leave_id = lid;
+END IF;
+END$$
+
+DELIMITER ;
+
+
+USE `pms`;
+CREATE  OR REPLACE VIEW `payment` AS
+
+SELECT salary_d.Employee_Id, salary_d.first_name,salary_d.last_name,salary_d.salary, pay.pay_status 
+FROM salary_d , pay WHERE pay_status<>1;
+
+
+USE `pms`;
+CREATE 
+     OR REPLACE ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `pms`.`payment` AS
+    SELECT 
+        `salary_d`.`Employee_Id` AS `Employee_Id`,
+        `salary_d`.`first_name` AS `first_name`,
+        `salary_d`.`last_name` AS `last_name`,
+        `salary_d`.`salary` AS `salary`,
+        `pms`.`pay`.`pay_status` AS `pay_status`
+    FROM
+        (`pms`.`salary_d`
+        JOIN `pms`.`pay`)
+    WHERE
+        (`pms`.`pay`.`pay_status` <> 1 and `pms`.`pay`.`Employee_Id`= `salary_d`.`Employee_Id`);

@@ -1,7 +1,7 @@
 import React from "react"
 import { Link } from "react-router-dom"
 import "../../css/sidebar.css"
-
+import Icon from "../../img/icon.png"
 const Sidebar = ({ isAdmin }) => {
   return (
     <>
@@ -10,7 +10,7 @@ const Sidebar = ({ isAdmin }) => {
         id="sidebar"
       >
         <div className="sidebar-sticky">
-          {/* <img src={Logo} alt="Logo" style={{ width: "50px" }} /> */}
+          <img src={Icon} alt="Icon" style={{ height:"100px" ,width: "100px" , marginLeft:"50px",marginTop:"10px"}} />
           {isAdmin == "true" ? (
             <ul className="nav flex-column">
               <li className="nav nav-item">
@@ -24,7 +24,7 @@ const Sidebar = ({ isAdmin }) => {
                 </Link>
               </li>
             <li className="nav nav-item">
-              <Link to="/emp/details">
+              <Link to="/admin/Employee_details">
                 <SidebarComponent text="View Employee" />
               </Link>
             </li>
@@ -41,6 +41,11 @@ const Sidebar = ({ isAdmin }) => {
               <li className="nav nav-item">
                 <Link to="/admin/Salary">
                   <SidebarComponent text="Salary Details" />
+                </Link>
+              </li>
+              <li className="nav nav-item">
+                <Link to="/admin/Pay">
+                  <SidebarComponent text="Pay Employee" />
                 </Link>
               </li>
               <li className="nav nav-item">
