@@ -10,7 +10,16 @@ const Sidebar = ({ isAdmin }) => {
         id="sidebar"
       >
         <div className="sidebar-sticky">
-          <img src={Icon} alt="Icon" style={{ height:"100px" ,width: "100px" , marginLeft:"50px",marginTop:"10px"}} />
+          <img
+            src={Icon}
+            alt="Icon"
+            style={{
+              height: "100px",
+              width: "100px",
+              marginLeft: "50px",
+              marginTop: "10px",
+            }}
+          />
           {isAdmin == "true" ? (
             <ul className="nav flex-column">
               <li className="nav nav-item">
@@ -23,16 +32,16 @@ const Sidebar = ({ isAdmin }) => {
                   <SidebarComponent text="Add Department" />
                 </Link>
               </li>
-            <li className="nav nav-item">
-              <Link to="/admin/Employee_details">
-                <SidebarComponent text="View Employee" />
-              </Link>
-            </li>
               <li className="nav nav-item">
-              <Link to="/admin/Department">
-                <SidebarComponent text=" View Department" />
-              </Link>
-            </li>
+                <Link to="/admin/Employee_details">
+                  <SidebarComponent text="View Employee" />
+                </Link>
+              </li>
+              <li className="nav nav-item">
+                <Link to="/admin/Department">
+                  <SidebarComponent text=" View Department" />
+                </Link>
+              </li>
               <li className="nav nav-item">
                 <Link to="/admin/AccRejLeave">
                   <SidebarComponent text="Leave Applications" />
@@ -46,21 +55,6 @@ const Sidebar = ({ isAdmin }) => {
               <li className="nav nav-item">
                 <Link to="/admin/Pay">
                   <SidebarComponent text="Pay Employee" />
-                </Link>
-              </li>
-              <li className="nav nav-item">
-                <Link to="/admin/members">
-                  <SidebarComponent text="Members" />
-                </Link>
-              </li>
-              <li className="nav nav-item">
-                <Link to="/admin/accounts">
-                  <SidebarComponent text="Accounts" />
-                </Link>
-              </li>
-              <li className="nav nav-item">
-                <Link to="/admin/services">
-                  <SidebarComponent text="Services" />
                 </Link>
               </li>
             </ul>
@@ -81,10 +75,10 @@ const Sidebar = ({ isAdmin }) => {
                   <SidebarComponent text="Check Attendance" />
                 </Link>
                 <li className="nav nav-item">
-                <Link to="/employee/SalaryDet">
-                  <SidebarComponent text="Salary Details" />
-                </Link>
-              </li>
+                  <Link to="/employee/SalaryDet">
+                    <SidebarComponent text="Salary Details" />
+                  </Link>
+                </li>
               </li>
             </ul>
           )}

@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react"
 import "../../css/members.css"
-import Modal from "./Modal"
 import Axios from "axios"
 import links from "../../links.json"
-import token from "../../token.json"
 import ReactLoading from "react-loading"
 
 const Employee_details = () => {
@@ -12,21 +10,14 @@ const Employee_details = () => {
 
   const [loader, setLoader] = useState(true)
   useEffect(() => {
-    Axios.get("/api/admin/Edet", {
-     
-    })
+    Axios.get("/api/admin/Edet", {})
       .then((res) => {
-        // console.log(res)
-        // res.data.DOB = res.data.DOB.split("T")[0]
         for (var i = 0; i < res.data.length; i++) {
-          // arr.push(result[i])
           res.data[i].DOB = res.data[i].DOB.split("T")[0]
           res.data[i].Hire_Date = res.data[i].Hire_Date.split("T")[0]
         }
-        // console.log(res.data[0])
-        
-        // res.data.Hire_Date = res.data.Hire_Date.split("T")[0]
         setTdata(res.data)
+        setLoader(false)
       })
       .catch((err) => console.log("Error", err))
   }, [])
@@ -40,19 +31,19 @@ const Employee_details = () => {
   return (
     <>
       <div className="container">
-        <div className="h1 p-4">Employee Details</div>
-        {/* <div className="d-flex justify-content-center">
+        <div className="d-flex justify-content-center">
           {loader ? (
             <ReactLoading type="bars" color="black" height={55} width={90} />
           ) : (
             ""
           )}
-        </div> */}
-       
+        </div>
+        <div className="h1 p-4">Employee Details</div>
+
         <div className="members">
           <table id="members" className="table">
             <thead className="thead-light">
-            <tr>
+              <tr>
                 <th>ID</th>
                 <th>First name</th>
                 <th>Last name</th>
@@ -68,7 +59,11 @@ const Employee_details = () => {
             </thead>
             <tbody>
               {tdata.map((e) => (
-                <TableData key={e.Employee_Id} mem={e} updateTdata={updateTdata} />
+                <TableData
+                  key={e.Employee_Id}
+                  mem={e}
+                  updateTdata={updateTdata}
+                />
               ))}
             </tbody>
           </table>
@@ -84,7 +79,6 @@ const TableData = ({ mem, updateTdata }) => {
 
   return (
     <>
-
       <tr>
         <td>{d.Employee_Id}</td>
         <td>{d.First_Name}</td>
@@ -97,9 +91,7 @@ const TableData = ({ mem, updateTdata }) => {
         <td>{d.Hire_Date}</td>
         <td>{d.City}</td>
         <td>{d.State}</td>
-        
       </tr>
-      
     </>
   )
 }

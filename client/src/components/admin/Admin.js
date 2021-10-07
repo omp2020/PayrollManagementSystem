@@ -5,11 +5,8 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 import AdminMain from "./AdminMain"
 import EmployeeMain from "../employee/EmployeeMain"
 import Leave from "../employee/Leave"
-import Members from "./Members"
 import AccRejLeave from "./AccRejLeave"
 import Salary from "./Salary"
-import Services from "./Services"
-import Accounts from "./Accounts"
 import Navbar from "./Navbar"
 import CreateUser from "./CreateUser"
 import AddDept from "./AddDept"
@@ -25,7 +22,6 @@ const Admin = () => {
   const [isAdmin] = useState(sessionStorage.getItem("isAdmin"))
   const [name, setName] = useState()
   useEffect(() => {
-    // console.log(sessionStorage.getItem("ID"))
     axios
       .get("/getName", { params: { id: sessionStorage.getItem("ID") } })
       .then((result) => {
@@ -68,9 +64,6 @@ const Admin = () => {
                 <Route path="/admin/addDept">
                   <AddDept />
                 </Route>
-                <Route path="/admin/members">
-                  <Members />
-                </Route>
                 <Route path="/admin/AccRejLeave">
                   <AccRejLeave />
                 </Route>
@@ -80,21 +73,12 @@ const Admin = () => {
                 <Route path="/admin/Pay">
                   <Pay />
                 </Route>
-                <Route path="/admin/services">
-                  <Services />
-                </Route>
-                <Route path="/admin/accounts">
-                  <Accounts />
-                </Route>
                 <Route path="/admin/Employee_details">
                   <EmpDetails />
                 </Route>
                 <Route path="/admin/Department">
                   <Department />
                 </Route>
-                {/* <Route path="/employee/Profile">
-                  <Profile />
-                </Route> */}
               </Switch>
             </main>
           </div>
