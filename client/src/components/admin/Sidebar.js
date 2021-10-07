@@ -76,16 +76,14 @@ const Sidebar = ({ isAdmin }) => {
                   <SidebarComponent text="Profile Page" />
                 </Link>
               </li>
-              <li className="nav nav-item">
-                <Link to="/employee/CheckAtt">
-                  <SidebarComponent text="Check Attendance" />
-                </Link>
+              
+                
                 <li className="nav nav-item">
                 <Link to="/employee/SalaryDet">
                   <SidebarComponent text="Salary Details" />
                 </Link>
               </li>
-              </li>
+              
             </ul>
           )}
         </div>
