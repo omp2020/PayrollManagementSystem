@@ -69,16 +69,11 @@ const Sidebar = ({ isAdmin }) => {
                 <Link to="/employee/profile">
                   <SidebarComponent text="Profile Page" />
                 </Link>
-              </li>
-              <li className="nav nav-item">
-                <Link to="/employee/CheckAtt">
-                  <SidebarComponent text="Check Attendance" />
+              </li> 
+               <li className="nav nav-item">
+                <Link to="/employee/SalaryDet">
+                  <SidebarComponent text="Salary Details" />
                 </Link>
-                <li className="nav nav-item">
-                  <Link to="/employee/SalaryDet">
-                    <SidebarComponent text="Salary Details" />
-                  </Link>
-                </li>
               </li>
             </ul>
           )}

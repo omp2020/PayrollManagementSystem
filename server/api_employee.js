@@ -13,8 +13,30 @@ con.connect(function (err) {
 })
 
 router.get("/applyLeave", function (req, res) {
-  let data = JSON.parse(req.query.data)
-  con.query("INSERT INTO ")
+  let data1 = JSON.parse(req.query.data)
+  console.log(data1)
+  con.query("CALL INSERT_LEAVE(?,?,?,?,?,?)", [data1.emp_id,data1.leave,data1.day,data1.fromDate,data1.toDate,data1.Reason],function(err, result) {
+  //   emp_id: '101',
+  // leave: 'sick leave',
+  // day: 'full',
+  // fromDate: '2021-10-08',
+  // toDate: '2021-10-09',
+  // Reason: 'fever'
+    if (err) throw err
+    else {
+      var data
+      if (err) {
+        data = { error: 1 }
+        res.send(data)
+      } else {
+        data = { error: 0 }
+        res.send(data)
+      }
+      
+    }
+  })
+ 
+
 })
 
 router.get("/createdept", function (req, res) {

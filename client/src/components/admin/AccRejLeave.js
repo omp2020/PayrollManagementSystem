@@ -15,10 +15,11 @@ const AccRejLeave = () => {
     Axios.get("/api/admin/listpleave", {})
       .then((res) => {
         for (var i = 0; i < res.data.length; i++) {
-          res.data[i].leave_date = res.data[i].leave_date.split("T")[0]
+          res.data[i].from_date = res.data[i].from_date.split("T")[0]
+          res.data[i].To_date = res.data[i].To_date.split("T")[0]
         }
-        setLData(res.data)
-        setLoader(false)
+          setLData(res.data)
+          setLoader(false)
       })
       .catch((err) => console.log("Error", err))
   }, [])
@@ -47,12 +48,14 @@ const AccRejLeave = () => {
           <table id="members" className="table">
             <thead className="thead-light">
               <tr>
-                <th>Leave ID</th>
                 <th>Employee ID</th>
                 <th>First Name</th>
                 <th>Last Name</th>
-                <th>Leave Date</th>
+                <th>From Date</th>
+                <th>To Date</th>
                 <th>Leave Type</th>
+                <th>Day Type</th>
+                <th>Reason</th>
                 <th>Available Leave</th>
                 <th>Status</th>
               </tr>
@@ -176,12 +179,15 @@ const TableData = ({ mem, updateTdata }) => {
         ""
       )}
       <tr>
-        <td>{d.Leave_Id}</td>
+        
         <td>{d.Employee_Id}</td>
         <td>{d.first_name}</td>
         <td>{d.last_name}</td>
-        <td>{d.leave_date}</td>
+        <td>{d.from_date}</td>
+        <td>{d.To_date}</td>
         <td>{d.leave_type}</td>
+        <td>{d.day_type}</td>
+        <td>{d.Reason}</td>
         <td>{d.available_leave}</td>
 
         <td>
