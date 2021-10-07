@@ -1,16 +1,28 @@
 import React,{useState} from 'react';
 import links from "../../links.json"
+import Toast from "../Toast"
+import checkIcon from "../../img/check.svg"
+import errorIcon from "../../img/error.svg"
+import axios from "axios"
+
 const Leave = () =>{
   const iL = sessionStorage.getItem("isLogin") ?? false
   iL || (window.location.href = links.login)
+  const [list, setList] = useState([])
+  let toastProperties = null
+  const [showtoast, settoast] = useState(false)
+  const id = Math.floor(Math.random() * 101 + 1)
   const [Leave,setLeave] = useState({
-    emp_id:"",
+    emp_id:sessionStorage.getItem("ID"),
     leave:"",
     day:"",
     fromDate:"",
     toDate:"",
     Reason:""
   })
+  const clearInputs = () => {
+    document.getElementById("leave-form").reset()
+  }
   const handleLeave = event =>{
     const name = event.target.name;
     const value = event.target.value;
@@ -22,10 +34,49 @@ const Leave = () =>{
   const handleSubmit = event =>{
       event.preventDefault();
       console.log(Leave)
+      axios
+      .get("/api/employee/applyLeave", {
+        params: { data: Leave },
+      })
+      .then((result) => {
+        if (result.data.error == "0") {
+          clearInputs()
+          toastProperties = {
+            id,
+            title: "Success",
+            description: "Leave Applied Successfully",
+            backgroundColor: "#5cb85c",
+            icon: checkIcon,
+          }
+          setList([...list, toastProperties])
+          settoast(true)
+        } else {
+          toastProperties = {
+            id,
+            title: "Danger",
+            description: "Leave was not applied",
+            backgroundColor: "#d9534f",
+            icon: errorIcon,
+          }
+          setList([...list, toastProperties])
+          settoast(true)
+        }
+      })
   }
+  
     return (
         <>
-            <form style={{marginLeft:"200px"}} onSubmit={handleSubmit}>
+        {showtoast ? (
+          <Toast
+            toastList={list}
+            position="top-right"
+            autoDelete={false}
+            autoDeleteTime="3000"
+          />
+        ) : (
+          ""
+        )}
+            <form style={{marginLeft:"200px"}} onSubmit={handleSubmit} id="leave-form">
               <h2 style={{marginTop:"10px"}}>Apply For Leave</h2>
               <br />
               
