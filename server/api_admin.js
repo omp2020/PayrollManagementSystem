@@ -4,15 +4,7 @@ var mysql = require("mysql")
 var con = mysql.createConnection({
   host: "localhost",
   user: "root",
-<<<<<<< HEAD
-<<<<<<< HEAD
   password: "YourRootPassword",
-=======
-  password: "P@vitra3131",
->>>>>>> 865a232e4771cd1000a1d5a7115bc208098c3cba
-=======
-  password: "admin@sa",
->>>>>>> 581f562f181c0bf26b4090a465a58fb1f9b3716a
   database: "pms",
 })
 
