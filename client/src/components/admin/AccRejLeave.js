@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react"
 import "../../css/members.css"
-import Modal from "./Modal"
 import Axios from "axios"
 import links from "../../links.json"
-import token from "../../token.json"
 import ReactLoading from "react-loading"
 import Toast from "../Toast"
 import checkIcon from "../../img/check.svg"
@@ -12,39 +10,21 @@ import errorIcon from "../../img/error.svg"
 const AccRejLeave = () => {
   const iL = sessionStorage.getItem("isLogin") ?? false
   iL || (window.location.href = links.login)
-  // const [list, setList] = useState([])
-  // let toastProperties = null
-  // const [showtoast, settoast] = useState(false)
-  // const id = Math.floor(Math.random() * 101 + 1)
   const [loader, setLoader] = useState(true)
   useEffect(() => {
-    Axios.get("/api/admin/listpleave", {
-      
-    })
+    Axios.get("/api/admin/listpleave", {})
       .then((res) => {
         for (var i = 0; i < res.data.length; i++) {
-          // arr.push(result[i])
           res.data[i].from_date = res.data[i].from_date.split("T")[0]
           res.data[i].To_date = res.data[i].To_date.split("T")[0]
         }
-          console.log(res.data[0].from_date)
           setLData(res.data)
-        // setTdata(res.data)
-        // setLoader(false)
+          setLoader(false)
       })
       .catch((err) => console.log("Error", err))
   }, [])
   const [tdata, setTdata] = useState([])
-  const [LData, setLData] = useState([
-    // Leave_Id:"",
-    // Employee_Id:"",
-    // first_name:"",
-    // last_name:"",
-    // leave_date:"",
-    // leave_type:"",
-    // available_leave:"",
-    // status:"",
-  ])
+  const [LData, setLData] = useState([])
 
   const updateTdata = (id) => {
     console.log("Id fromt data", id)
@@ -52,68 +32,18 @@ const AccRejLeave = () => {
     setTdata(data)
   }
 
-  const changeVal = (e, id, t, f) => {
-    let val = e.target.value
-    console.log(e)
-    
-      switch (id) {
-        case "Leave_Id":
-            setLData({ ...LData, Leave_Id: val })
-          break
-        case "Employee_Id":
-            setLData({ ...LData, Employee_Id: val })
-          break
-        case "first_name":
-            setLData({ ...LData, first_name: val })
-          break
-        case "last_name":
-            setLData({ ...LData, last_name: val })
-          break
-        case "leave_date":
-            setLData({ ...LData, leave_date: val })
-          break
-        case "leave_type":
-            setLData({ ...LData, leave_type: val })
-          break
-          case "available_leave":
-            setLData({ ...LData, available_leave: val })
-          break
-          case "status":
-            setLData({ ...LData, status: val })
-          break  
-        default:
-          break
-    
-    }
-  }
-
-  const handleSave = (f, t) => {
-    
-      
-        }
-    
-  
-
-  const handleNew = () => {
-    
-    console.log("Handle New Clicked")
-  }
-
   return (
     <>
-    
       <div className="container">
-      
-        <div className="h1 p-4">Check Leave Applications</div>
-
-        {/* <div className="d-flex justify-content-center">
+        <div className="d-flex justify-content-center">
           {loader ? (
             <ReactLoading type="bars" color="black" height={55} width={90} />
           ) : (
             ""
           )}
         </div>
-     */}
+        <div className="h1 p-4">Check Leave Applications</div>
+
         <div className="members">
           <table id="members" className="table">
             <thead className="thead-light">
@@ -144,15 +74,15 @@ const AccRejLeave = () => {
 
 const TableData = ({ mem, updateTdata }) => {
   let [d, setData] = useState(mem)
-  const [modal, setModal] = useState({ Edit: false, Delete: false })
   const [list, setList] = useState([])
   let toastProperties = null
   const [showtoast, settoast] = useState(false)
   const id = Math.floor(Math.random() * 101 + 1)
   const handleEdit = () => {
     console.log(d)
-    Axios.get("/api/admin/Accleave", {params: { id: d.Leave_Id ,status:'Approved'}})
-    .then((result) => {
+    Axios.get("/api/admin/Accleave", {
+      params: { id: d.Leave_Id, status: "Approved" },
+    }).then((result) => {
       if (result.data.error == "0") {
         toastProperties = {
           id,
@@ -175,14 +105,13 @@ const TableData = ({ mem, updateTdata }) => {
         settoast(true)
       }
     })
-    // setModal({ Edit: true, Delete: false })
-    
   }
 
   const handleDeletemodal = () => {
     console.log("From Delete: ", d)
-    Axios.get("/api/admin/Accleave", {params: { id: d.Leave_Id ,status:'Reject'}})
-    .then((result) => {
+    Axios.get("/api/admin/Accleave", {
+      params: { id: d.Leave_Id, status: "Reject" },
+    }).then((result) => {
       if (result.data.error == "0") {
         toastProperties = {
           id,
@@ -205,7 +134,6 @@ const TableData = ({ mem, updateTdata }) => {
         settoast(true)
       }
     })
-    // setModal({ Edit: false, Delete: true })
   }
 
   const changeVal = (e, id, t, f) => {
@@ -238,57 +166,18 @@ const TableData = ({ mem, updateTdata }) => {
     }
   }
 
-  const handleSave = (f, t) => {
-    if (f === "members" && t === "edit") {
-      console.log(d)
-      Axios.put(links.home + links.members, d, {
-        params: { id: d.id },
-        headers: {
-          Authorization: `token ${token.token}`,
-        },
-      })
-        .then((res) => {
-          console.log("Success")
-        })
-        .catch((err) => {
-          console.log("Error", err)
-        })
-    }
-  }
-
-  const handleDelete = (f, t) => {
-    if (f === "members" && t === "delete") {
-      console.log("ID:", d)
-      Axios.delete(links.home + links.members, {
-        params: { id: d.id },
-        headers: {
-          Authorization: `token ${token.token}`,
-        },
-      })
-        .then(() => {
-          console.log("Success")
-          setModal({ Edit: false, Delete: false })
-          updateTdata(d.id)
-        })
-        .catch((err) => {
-          console.log("Error", err)
-        })
-    }
-  }
-
   return (
     <>
-    {showtoast ? (
-          <Toast
-            toastList={list}
-            position="top-right"
-            autoDelete={false}
-            autoDeleteTime="3000"
-          />
-        ) : (
-          ""
-        )}
-        
+      {showtoast ? (
+        <Toast
+          toastList={list}
+          position="top-right"
+          autoDelete={false}
+          autoDeleteTime="3000"
+        />
+      ) : (
+        ""
+      )}
       <tr>
         
         <td>{d.Employee_Id}</td>
@@ -327,30 +216,6 @@ const TableData = ({ mem, updateTdata }) => {
           </button>
         </td>
       </tr>
-      {modal.Edit ? (
-        <Modal
-          data={d}
-          type="edit"
-          from="members"
-          changeVal={changeVal}
-          handleSave={handleSave}
-          handleDelete={handleDelete}
-        />
-      ) : (
-        ""
-      )}
-      {modal.Delete ? (
-        <Modal
-          data={d}
-          type="delete"
-          from="members"
-          changeVal={changeVal}
-          handleSave={handleSave}
-          handleDelete={handleDelete}
-        />
-      ) : (
-        ""
-      )}
     </>
   )
 }

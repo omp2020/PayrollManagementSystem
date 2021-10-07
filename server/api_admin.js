@@ -99,16 +99,19 @@ router.get("/listdept", function (req, res) {
 
 router.get("/listpleave", function (req, res) {
   let arr = []
-  con.query("SELECT * FROM AccRejLeave WHERE status like 'Pending'", function (err, result) {
-    if (err) throw err
-    else {
-      for (var i = 0; i < result.length; i++) {
-        arr.push(result[i])
+  con.query(
+    "SELECT * FROM AccRejLeave WHERE status like 'Pending'",
+    function (err, result) {
+      if (err) throw err
+      else {
+        for (var i = 0; i < result.length; i++) {
+          arr.push(result[i])
+        }
+        res.send(arr)
+        // console.log(result);
       }
-      res.send(arr)
-      // console.log(result);
     }
-  })
+  )
 })
 
 router.get("/listsalary", function (req, res) {
@@ -148,7 +151,7 @@ router.get("/Edet", function (req, res) {
         arr.push(result[i])
       }
       res.send(arr)
-      
+
       // console.log(result);
     }
   })
@@ -162,44 +165,50 @@ router.get("/Ddet", function (req, res) {
         arr.push(result[i])
       }
       res.send(arr)
-      
+
       // console.log(result);
     }
   })
 })
 router.get("/AccLeave", function (req, res) {
   let arr = []
-  con.query("CALL UPDATE_SALARY(?,?)", [req.query.id,req.query.status],function(err, result) {
-    if (err) throw err
-    else {
-      var data
-      if (err) {
-        data = { error: 1 }
-        res.send(data)
-      } else {
-        data = { error: 0 }
-        res.send(data)
+  con.query(
+    "CALL UPDATE_SALARY(?,?)",
+    [req.query.id, req.query.status],
+    function (err, result) {
+      if (err) throw err
+      else {
+        var data
+        if (err) {
+          data = { error: 1 }
+          res.send(data)
+        } else {
+          data = { error: 0 }
+          res.send(data)
+        }
       }
-      
     }
-  })
+  )
 })
 
 router.get("/payroll", function (req, res) {
   let arr = []
-  con.query("UPDATE pay SET pay_status=1 WHERE Employee_Id=?", [req.query.id],function(err, result) {
-    if (err) throw err
-    else {
-      var data
-      if (err) {
-        data = { error: 1 }
-        res.send(data)
-      } else {
-        data = { error: 0 }
-        res.send(data)
+  con.query(
+    "UPDATE pay SET pay_status=1 WHERE Employee_Id=?",
+    [req.query.id],
+    function (err, result) {
+      if (err) throw err
+      else {
+        var data
+        if (err) {
+          data = { error: 1 }
+          res.send(data)
+        } else {
+          data = { error: 0 }
+          res.send(data)
+        }
       }
-      
     }
-  })
+  )
 })
 module.exports = router

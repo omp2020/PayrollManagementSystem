@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react"
 import "../../css/members.css"
-import Modal from "./Modal"
 import Axios from "axios"
 import links from "../../links.json"
-import token from "../../token.json"
 import ReactLoading from "react-loading"
 
 const Salary = () => {
@@ -12,89 +10,27 @@ const Salary = () => {
 
   const [loader, setLoader] = useState(true)
   useEffect(() => {
-    Axios.get("/api/admin/listsalary", {
-     
-    })
+    Axios.get("/api/admin/listsalary", {})
       .then((res) => {
-        console.log(res)
         setSData(res.data)
+        setLoader(false)
       })
       .catch((err) => console.log("Error", err))
   }, [])
-  const [tdata, setTdata] = useState([])
-  const [SData, setSData] = useState([
-    // Salary_Id:"",
-    // Employee_Id:"",
-    // first_name:"",
-    // last_name:"",
-    // designation:"",
-    // month:"",
-    // year:"",
-    // salary:"",
-  ])
-
-  const updateTdata = (id) => {
-    console.log("Id fromt data", id)
-    const data = tdata.filter((t) => t.id !== id)
-    setTdata(data)
-  }
-
-  const changeVal = (e, id, t, f) => {
-    let val = e.target.value
-    console.log(e)
-    
-      switch (id) {
-        case "Salary_Id":
-            setSData({ ...SData, Salary_Id: val })
-          break
-        case "Employee_Id":
-            setSData({ ...SData, Employee_Id: val })
-          break
-        case "First_Name":
-            setSData({ ...SData, First_Name: val })
-          break
-        case "Last_Name":
-            setSData({ ...SData, Last_Name: val })
-          break
-          case "designation":
-          setSData({ ...SData, designation: val })
-          break
-        case "month":
-            setSData({ ...SData, month: val })
-            break
-        case "year":
-            setSData({ ...SData, year: val })
-          break
-        case "salary":
-            setSData({ ...SData, salary: val })
-          break  
-
-        default:
-          break
-      }
-    
-  }
-
-  const handleSave = (f, t) => {
-    
-  }
-
-  const handleNew = () => {
-    console.log("Handle New Clicked")
-  }
+  const [SData, setSData] = useState([])
 
   return (
     <>
       <div className="container">
-        <div className="h1 p-4">Salary Details</div>
-        {/* <div className="d-flex justify-content-center">
+        <div className="d-flex justify-content-center">
           {loader ? (
             <ReactLoading type="bars" color="black" height={55} width={90} />
           ) : (
             ""
           )}
-        </div> */}
-       
+        </div>
+        <div className="h1 p-4">Salary Details</div>
+
         <div className="members">
           <table id="members" className="table">
             <thead className="thead-light">
@@ -111,7 +47,7 @@ const Salary = () => {
             </thead>
             <tbody>
               {SData.map((t) => (
-                <TableData key={t.Salary_Id} mem={t} updateTdata={updateTdata} />
+                <TableData key={t.Salary_Id} mem={t} />
               ))}
             </tbody>
           </table>
@@ -121,9 +57,8 @@ const Salary = () => {
   )
 }
 
-const TableData = ({ mem, updateTdata }) => {
+const TableData = ({ mem }) => {
   let [d, setData] = useState(mem)
-  const [modal, setModal] = useState({ Edit: false, Delete: false })
 
   return (
     <>
@@ -136,9 +71,7 @@ const TableData = ({ mem, updateTdata }) => {
         <td>{d.month}</td>
         <td>{d.year}</td>
         <td>{d.salary}</td>
-        
       </tr>
-      
     </>
   )
 }
