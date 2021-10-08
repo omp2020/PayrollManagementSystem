@@ -3,6 +3,9 @@ import "../../css/members.css"
 import Axios from "axios"
 import links from "../../links.json"
 import ReactLoading from "react-loading"
+import Toast from "../Toast"
+import checkIcon from "../../img/check.svg"
+import errorIcon from "../../img/error.svg"
 
 const Department = () => {
   const iL = sessionStorage.getItem("isLogin") ?? false
@@ -42,6 +45,7 @@ const Department = () => {
               <tr>
                 <th>Department ID</th>
                 <th>Department Name</th>
+                <th>Option</th>
               </tr>
             </thead>
             <tbody>
@@ -62,13 +66,67 @@ const Department = () => {
 
 const TableData = ({ mem, updateTdata }) => {
   let [d, setData] = useState(mem)
-  const [modal, setModal] = useState({ Edit: false, Delete: false })
-
+  const [list, setList] = useState([])
+  let toastProperties = null
+  const [showtoast, settoast] = useState(false)
+  const id = Math.floor(Math.random() * 101 + 1)
+  const handleDeletemodal = () => {
+    console.log("From Delete: ", d)
+    Axios.get("/api/admin/delDept", {
+      params: { id: d.Department_Id },
+    }).then((result) => {
+      if (result.data.error == "0") {
+        toastProperties = {
+          id,
+          title: "Success",
+          description: "Department Deleted",
+          backgroundColor: "#5cb85c",
+          icon: checkIcon,
+        }
+        setList([...list, toastProperties])
+        settoast(true)
+      } else {
+        toastProperties = {
+          id,
+          title: "Danger",
+          description: "Error",
+          backgroundColor: "#d9534f",
+          icon: errorIcon,
+        }
+        setList([...list, toastProperties])
+        settoast(true)
+      }
+    })
+  }
   return (
     <>
+      {showtoast ? (
+        <Toast
+          toastList={list}
+          position="top-right"
+          autoDelete={false}
+          autoDeleteTime="3000"
+        />
+      ) : (
+        ""
+      )}
       <tr>
         <td>{d.Department_Id}</td>
         <td>{d.Department_Name}</td>
+        <td>
+          <button
+            type="button"
+            class="btn btn-outline-danger btn-sm"
+            data-toggle="modal"
+            data-target="#Delete"
+            style={{ marginLeft: "5px" }}
+            onClick={() => {
+              handleDeletemodal()
+            }}
+          >
+            Delete
+          </button>
+        </td>
       </tr>
     </>
   )

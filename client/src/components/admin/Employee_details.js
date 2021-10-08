@@ -51,7 +51,6 @@ const Employee_details = () => {
                 <th>DOB</th>
                 <th>Designation</th>
                 <th>DeptID</th>
-                <th>Role</th>
                 <th>Hire date</th>
                 <th>City</th>
                 <th>State</th>
@@ -75,7 +74,6 @@ const Employee_details = () => {
 
 const TableData = ({ mem, updateTdata }) => {
   let [d, setData] = useState(mem)
-  const [modal, setModal] = useState({ Edit: false, Delete: false })
 
   return (
     <>
@@ -87,7 +85,6 @@ const TableData = ({ mem, updateTdata }) => {
         <td>{d.DOB}</td>
         <td>{d.Designation}</td>
         <td>{d.Department_ID}</td>
-        <td>{d.Employee_Role}</td>
         <td>{d.Hire_Date}</td>
         <td>{d.City}</td>
         <td>{d.State}</td>

@@ -30,6 +30,43 @@ router.get("/createdept", function (req, res) {
   )
 })
 
+router.get("/leavestatus", function (req, res) {
+  con.query(
+    "SELECT COUNT(Status) as Leaves, status FROM pms.leave_details group by status ORDER BY status",
+    function (err, result) {
+      var arr = []
+      if (err) {
+        throw err
+      } else {
+        for (var i = 0; i < result.length; i++) {
+          arr.push(result[i])
+        }
+        res.send(arr)
+      }
+    }
+  )
+})
+
+router.get("/delDept", function (req, res) {
+  con.query(
+    "DELETE FROM department WHERE Department_Id = ?",
+    [req.query.id],
+    function (err) {
+      if (err) throw err
+      else {
+        var data
+        if (err) {
+          data = { error: 1 }
+          res.send(data)
+        } else {
+          data = { error: 0 }
+          res.send(data)
+        }
+      }
+    }
+  )
+})
+
 router.get("/createUser", function (req, res) {
   let data = JSON.parse(req.query.data)
   con.query(
