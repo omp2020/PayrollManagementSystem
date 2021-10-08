@@ -8,14 +8,26 @@ const AdminMain = () => {
   iL || (window.location.href = links.login)
   const [cntEmp, setcntEmp] = useState()
   const [cntDep, setcntDep] = useState()
+  const [ldata, setlData] = useState({
+    stat: [],
+    leaves: [],
+  })
   const data = {
-    labels: ["Pending", "Approved"],
+    labels: ["Accepted", "Pending", "Rejected"],
     datasets: [
       {
         label: "# of Votes",
-        data: [12, 19],
-        backgroundColor: ["rgba(255, 0, 0, 0.5)", "rgba(0, 255, 0, 0.5)"],
-        borderColor: ["rgba(255, 0, 0, 1)", "rgba(0, 255, 0, 1)"],
+        data: ldata.leaves,
+        backgroundColor: [
+          "rgba(0, 255, 0, 0.5)",
+          "rgba(255, 0, 0, 0.5)",
+          "rgba(255, 255, 0, 0.5)",
+        ],
+        borderColor: [
+          "rgba(0, 255, 0, 1)",
+          "rgba(255, 0, 0, 1)",
+          "rgba(255, 255, 0, 1)",
+        ],
         borderWidth: 1,
       },
     ],
@@ -56,6 +68,16 @@ const AdminMain = () => {
     })
     axios.get("/api/admin/getCntDEP").then((response) => {
       setcntDep(response.data.depCnt)
+    })
+    axios.get("/api/admin/leavestatus").then((response) => {
+      var arr1 = [],
+        arr2 = []
+      for (var i = 0; i < response.data.length; i++) {
+        arr1.push(String(response.data[i].status))
+        arr2.push(response.data[i].Leaves)
+      }
+      setlData({ ...ldata, stat: arr1 })
+      setlData({ ...ldata, leaves: arr2 })
     })
   }, [])
   return (
