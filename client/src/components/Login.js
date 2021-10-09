@@ -3,6 +3,7 @@ import "../css/login.css"
 import Field from "./Field"
 import { Redirect } from "react-router-dom"
 import axios from "axios"
+import wpuLogo from "../img/wpu-logo.png"
 
 const Login = () => {
   const [loginData, setLD] = useState({
@@ -80,7 +81,11 @@ const Login = () => {
           <div className="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4">
             <div className="card h-100 card-primary justify-content-center">
               <div className="login-brand align-self-center p-3">
-                <b className="h4">DBMS Project</b>
+                <center>
+                  <img src={wpuLogo} alt="MIT World Peace University" />
+                </center>
+                <br />
+                <b className="h4">Payroll Management System</b>
               </div>
               <div className="card-body">
                 <div className="form-group">
